@@ -6,9 +6,14 @@ using UnityEngine;
 
 namespace MassFarming
 {
-    [BepInPlugin("EardwulfDoesMods.Comfy.MassFarming", "Comfy.MassFarming", "1.2.3")]
+    //[BepInPlugin("EardwulfDoesMods.Comfy.MassFarming", "Comfy.MassFarming", "1.2.3")]
+    [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
     public class MassFarming : BaseUnityPlugin
     {
+        public const string PluginGuid = "EardwulfDoesMods.Comfy.MassFarming";
+        public const string PluginName = "Comfy.MassFarming";
+        public const string PluginVersion = "1.2.3";
+
         public static ConfigEntry<KeyboardShortcut> MassActionHotkey { get; private set; }
         public static ConfigEntry<bool> NoActionKeyNeeded { get; private set; }
         public static ConfigEntry<KeyboardShortcut> ControllerPickupHotkey { get; private set; }
