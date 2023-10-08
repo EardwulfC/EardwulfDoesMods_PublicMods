@@ -1,46 +1,418 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
 using HarmonyLib;
+using System.Collections.Generic;
+using System.Linq;
+using System;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.Rendering;
+
+using static MassFarming.PluginConfig;
 
 namespace MassFarming
 {
-    //[BepInPlugin("EardwulfDoesMods.Comfy.MassFarming", "Comfy.MassFarming", "1.2.3")]
     [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
     public class MassFarming : BaseUnityPlugin
     {
         public const string PluginGuid = "EardwulfDoesMods.Comfy.MassFarming";
         public const string PluginName = "Comfy.MassFarming";
-        public const string PluginVersion = "1.2.3";
+        public const string PluginVersion = "1.3.0";
 
-        public static ConfigEntry<KeyboardShortcut> MassActionHotkey { get; private set; }
-        public static ConfigEntry<bool> NoActionKeyNeeded { get; private set; }
-        public static ConfigEntry<KeyboardShortcut> ControllerPickupHotkey { get; private set; }
-        public static ConfigEntry<int> PlantGridWidth { get; private set; }
-        public static ConfigEntry<int> PlantGridLength { get; private set; }
-        public static ConfigEntry<bool> GridAnchorWidth { get; private set; }
-        public static ConfigEntry<bool> GridAnchorLength { get; private set; }
+        Harmony _harmony;
 
         public void Awake()
         {
-            MassActionHotkey = Config.Bind("Hotkeys", nameof(MassActionHotkey), new KeyboardShortcut(KeyCode.LeftAlt), "Mass activation hotkey for multi-plant.");
-          
-            ControllerPickupHotkey = Config.Bind("Hotkeys", nameof(ControllerPickupHotkey), new KeyboardShortcut(KeyCode.JoystickButton4), "Mass activation hotkey for multi-pickup/multi-plant for controller.");
-
-            NoActionKeyNeeded = Config.Bind("Override Grid Plant", nameof(NoActionKeyNeeded), false, "Enable or disable grid planting without an action key");
-
-            PlantGridWidth = Config.Bind("Plant Grid", "Plant Grid Width", 3, new ConfigDescription("The width of mass planting grid.  Default value is 3.",
-                new AcceptableValueRange<int>(1, 3)));
-
-            PlantGridLength = Config.Bind("Plant Grid", "Plant Grid Length", 3, new ConfigDescription("The lenght of the mass planting grid.  Default value is 3.",
-                new AcceptableValueRange<int>(1, 3)));
-
-            GridAnchorWidth = Config.Bind("PlantGrid", nameof(GridAnchorWidth), true, "Planting grid anchor point (width). Default is 'enabled' so the grid will extend left and right from the crosshairs. Disable to set the anchor to the side of the grid. Disable both anchors to set to corner.");
-            
-            GridAnchorLength = Config.Bind("PlantGrid", nameof(GridAnchorLength), true, "Planting grid anchor point (length). Default is 'enabled' so the grid will extend forward and backward from the crosshairs. Disable to set the anchor to the side of the grid. Disable both anchors to set to corner.");
-
-            Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), null);
+            BindConfig(Config);
+            _harmony = Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), harmonyInstanceId: PluginGuid);
         }
+
+        [HarmonyPatch]
+        public class MassPlant
+        {
+            private static FieldInfo m_noPlacementCostField = AccessTools.Field(typeof(Player), "m_noPlacementCost");
+            private static FieldInfo m_placementGhostField = AccessTools.Field(typeof(Player), "m_placementGhost");
+            private static FieldInfo m_buildPiecesField = AccessTools.Field(typeof(Player), "m_buildPieces");
+            private static MethodInfo _GetRightItemMethod = AccessTools.Method(typeof(Humanoid), "GetRightItem");
+
+            private static Vector3 placedPosition;
+            private static Quaternion placedRotation;
+            private static Piece placedPiece;
+            private static bool placeSuccessful = false;
+
+            [HarmonyPostfix]
+            [HarmonyPatch(typeof(Player), "PlacePiece")]
+            public static void PlacePiecePostfix(Player __instance, ref bool __result, Piece piece)
+            {
+                placeSuccessful = __result;
+                if (__result)
+                {
+                    var placeGhost = (GameObject)m_placementGhostField.GetValue(__instance);
+                    placedPosition = placeGhost.transform.position;
+                    placedRotation = placeGhost.transform.rotation;
+                    placedPiece = piece;
+                }
+            }
+
+            [HarmonyPrefix]
+            [HarmonyPatch(typeof(Player), "UpdatePlacement")]
+            public static void UpdatePlacementPrefix(bool takeInput, float dt)
+            {
+                //Clear any previous place result
+                placeSuccessful = false;
+            }
+
+            [HarmonyPostfix]
+            [HarmonyPatch(typeof(Player), "UpdatePlacement")]
+            public static void UpdatePlacementPostfix(Player __instance, bool takeInput, float dt)
+            {
+                if (!placeSuccessful)
+                {
+                    //Ignore when the place didn't happen
+                    return;
+                }
+
+                var plant = placedPiece.gameObject.GetComponent<Plant>();
+                if (!plant)
+                {
+                    return;
+                }
+
+                var heightmap = Heightmap.FindHeightmap(placedPosition);
+                if (!heightmap)
+                {
+                    return;
+                }
+
+                if (!NoActionKeyNeeded.Value && !Input.GetKey(ControllerPickupHotkey.Value.MainKey)
+                        && !Input.GetKey(MassActionHotkey.Value.MainKey))
+                {
+                    //Hotkey required
+                    return;
+                }
+
+                foreach (var newPos in BuildPlantingGridPositions(placedPosition, plant, placedRotation))
+                {
+                    if (placedPiece.m_cultivatedGroundOnly && !heightmap.IsCultivated(newPos))
+                    {
+                        continue;
+                    }
+
+                    if (placedPosition == newPos)
+                    {
+                        //Trying to place around the origin point, so avoid placing a duplicate at the same location
+                        continue;
+                    }
+
+                    var tool = _GetRightItemMethod.Invoke(__instance, Array.Empty<object>()) as ItemDrop.ItemData;
+                    var hasStamina = __instance.HaveStamina(tool.m_shared.m_attack.m_attackStamina * 1.7695f);
+
+                    ZLog.Log($"Normal Per Plant Stamina: {tool.m_shared.m_attack.m_attackStamina}, Per Plant Stamina with CMF: {tool.m_shared.m_attack.m_attackStamina * 1.7695f}," +
+                        $" Additional Per Plant Stamina with CMF: {tool.m_shared.m_attack.m_attackStamina * 1.7695f - tool.m_shared.m_attack.m_attackStamina}");
+
+                    if (!hasStamina)
+                    {
+                        Hud.instance.StaminaBarUppgradeFlash();
+                        return;
+                    }
+
+                    var hasMats = (bool)m_noPlacementCostField.GetValue(__instance) || __instance.HaveRequirements(placedPiece, Player.RequirementMode.CanBuild);
+                    if (!hasMats)
+                    {
+                        return;
+                    }
+
+                    if (!HasGrowSpace(newPos, placedPiece.gameObject))
+                    {
+                        continue;
+                    }
+
+                    GameObject newPlaceObj = UnityEngine.Object.Instantiate(placedPiece.gameObject, newPos, placedRotation);
+                    Piece component = newPlaceObj.GetComponent<Piece>();
+                    if (component)
+                    {
+                        component.SetCreator(__instance.GetPlayerID());
+                    }
+                    placedPiece.m_placeEffect.Create(newPos, placedRotation, newPlaceObj.transform);
+                    Game.instance.IncrementPlayerStat(PlayerStatType.Builds);
+
+                    __instance.ConsumeResources(placedPiece.m_resources, 0, -1);
+
+                    __instance.UseStamina(tool.m_shared.m_attack.m_attackStamina * 1.7695f); //stamina used for Mass Planting
+
+                    tool.m_durability -= tool.m_shared.m_useDurabilityDrain;
+                    if (tool.m_durability <= 0f)
+                    {
+                        return;
+                    }
+                }
+            }
+
+            private static List<Vector3> BuildPlantingGridPositions(Vector3 originPos, Plant placedPlant, Quaternion rotation)
+            {
+                var plantRadius = placedPlant.m_growRadius * 2;
+
+                List<Vector3> gridPositions = new List<Vector3>(PlantGridWidth.Value * PlantGridLength.Value);
+                Vector3 left = rotation * Vector3.left * plantRadius;
+                Vector3 forward = rotation * Vector3.forward * plantRadius;
+                Vector3 gridOrigin = originPos;
+                if (GridAnchorLength.Value)
+                {
+                    gridOrigin -= forward * (PlantGridLength.Value / 2);
+                }
+                if (GridAnchorWidth.Value)
+                {
+                    gridOrigin -= left * (PlantGridWidth.Value / 2);
+                }
+
+                Vector3 newPos;
+                for (var x = 0; x < PlantGridLength.Value; x++)
+                {
+                    newPos = gridOrigin;
+                    for (var z = 0; z < PlantGridWidth.Value; z++)
+                    {
+                        newPos.y = ZoneSystem.instance.GetGroundHeight(newPos);
+                        gridPositions.Add(newPos);
+                        newPos += left;
+                    }
+                    gridOrigin += forward;
+                }
+                return gridPositions;
+            }
+
+            static int _plantSpaceMask = LayerMask.GetMask("Default", "static_solid", "Default_small", "piece", "piece_nonsolid");
+            private static bool HasGrowSpace(Vector3 newPos, GameObject go)
+            {
+                if (go.GetComponent<Plant>() is Plant placingPlant)
+                {
+                    Collider[] nearbyObjects = Physics.OverlapSphere(newPos, placingPlant.m_growRadius, _plantSpaceMask);
+                    return nearbyObjects.Length == 0;
+                }
+                return true;
+            }
+
+            private static GameObject[] _placementGhosts = new GameObject[1];
+            private static Piece _fakeResourcePiece = new Piece()
+            {
+                m_dlc = string.Empty,
+                m_resources = new Piece.Requirement[]
+                {
+                new Piece.Requirement()
+                }
+            };
+
+            [HarmonyPostfix]
+            [HarmonyPatch(typeof(Player), "SetupPlacementGhost")]
+            public static void SetupPlacementGhostPostfix(Player __instance)
+            {
+                DestroyGhosts();
+            }
+
+            [HarmonyPostfix]
+            [HarmonyPatch(typeof(Player), "UpdatePlacementGhost")]
+            public static void UpdatePlacementGhostPostfix(Player __instance, bool flashGuardStone)
+            {
+                var ghost = (GameObject)m_placementGhostField.GetValue(__instance);
+                if (!ghost || !ghost.activeSelf)
+                {
+                    SetGhostsActive(false);
+                    return;
+                }
+
+                if (!NoActionKeyNeeded.Value && !Input.GetKey(ControllerPickupHotkey.Value.MainKey)
+                       && !Input.GetKey(MassActionHotkey.Value.MainKey))
+                {
+                    //Hotkey required
+                    SetGhostsActive(false);
+                    return;
+                }
+
+                var plant = ghost.GetComponent<Plant>();
+                if (!plant)
+                {
+                    SetGhostsActive(false);
+                    return;
+                }
+
+                if (!EnsureGhostsBuilt(__instance))
+                {
+                    SetGhostsActive(false);
+                    return;
+                }
+
+                //Find the required resource to plant the item
+                //Assuming that for plants there is only a single resource requirement...
+                var requirement = ghost.GetComponent<Piece>().m_resources.FirstOrDefault(r => r.m_resItem && r.m_amount > 0);
+                _fakeResourcePiece.m_resources[0].m_resItem = requirement.m_resItem;
+                _fakeResourcePiece.m_resources[0].m_amount = requirement.m_amount;
+
+                var currentStamina = __instance.GetStamina();
+                var tool = _GetRightItemMethod.Invoke(__instance, Array.Empty<object>()) as ItemDrop.ItemData;
+                var heightmap = Heightmap.FindHeightmap(ghost.transform.position);
+                var positions = BuildPlantingGridPositions(ghost.transform.position, plant, ghost.transform.rotation);
+                for (int i = 0; i < _placementGhosts.Length; i++)
+                {
+                    var newPos = positions[i];
+                    if (ghost.transform.position == newPos)
+                    {
+                        //Trying to place around the origin point, so avoid placing a duplicate at the same location
+                        _placementGhosts[i].SetActive(false);
+                        continue;
+                    }
+
+                    //Track total cost of each placement
+                    _fakeResourcePiece.m_resources[0].m_amount += requirement.m_amount;
+
+                    _placementGhosts[i].transform.position = newPos;
+                    _placementGhosts[i].transform.rotation = ghost.transform.rotation;
+                    _placementGhosts[i].SetActive(true);
+
+                    bool invalid = false;
+                    if (ghost.GetComponent<Piece>().m_cultivatedGroundOnly && !heightmap.IsCultivated(newPos))
+                    {
+                        invalid = true;
+                    }
+                    else if (!HasGrowSpace(newPos, ghost.gameObject))
+                    {
+                        invalid = true;
+                    }
+                    else if (currentStamina < tool.m_shared.m_attack.m_attackStamina * 1.7999f)
+                    {
+                        Hud.instance.StaminaBarUppgradeFlash();
+                        invalid = true;
+                    }
+                    else if (!(bool)m_noPlacementCostField.GetValue(__instance) && !__instance.HaveRequirements(_fakeResourcePiece, Player.RequirementMode.CanBuild))
+                    {
+                        invalid = true;
+                    }
+                    currentStamina -= tool.m_shared.m_attack.m_attackStamina * 1.7999f;
+
+                    _placementGhosts[i].GetComponent<Piece>().SetInvalidPlacementHeightlight(invalid);
+                }
+            }
+
+            private static bool EnsureGhostsBuilt(Player player)
+            {
+                var requiredSize = PlantGridWidth.Value * PlantGridLength.Value;
+                bool needsRebuild = !_placementGhosts[0] || _placementGhosts.Length != requiredSize;
+                if (needsRebuild)
+                {
+                    DestroyGhosts();
+
+                    if (_placementGhosts.Length != requiredSize)
+                    {
+                        _placementGhosts = new GameObject[requiredSize];
+                    }
+
+                    if (m_buildPiecesField.GetValue(player) is PieceTable pieceTable && pieceTable.GetSelectedPrefab() is GameObject prefab)
+                    {
+                        if (prefab.GetComponent<Piece>().m_repairPiece)
+                        {
+                            //Repair piece doesn't have ghost
+                            return false;
+                        }
+
+                        for (int i = 0; i < _placementGhosts.Length; i++)
+                        {
+                            _placementGhosts[i] = SetupMyGhost(player, prefab);
+                        }
+                    }
+                    else
+                    {
+                        //No prefab, so don't need ghost (this probably shouldn't ever happen)
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            private static void DestroyGhosts()
+            {
+                for (int i = 0; i < _placementGhosts.Length; i++)
+                {
+                    if (_placementGhosts[i])
+                    {
+                        UnityEngine.Object.Destroy(_placementGhosts[i]);
+                        _placementGhosts[i] = null;
+                    }
+                }
+            }
+
+            private static void SetGhostsActive(bool active)
+            {
+                foreach (var ghost in _placementGhosts)
+                {
+                    ghost?.SetActive(active);
+                }
+            }
+
+            private static GameObject SetupMyGhost(Player player, GameObject prefab)
+            {
+                //This takes some shortcuts because it's only ever used for Plant pieces
+
+                ZNetView.m_forceDisableInit = true;
+                var newGhost = UnityEngine.Object.Instantiate(prefab);
+                ZNetView.m_forceDisableInit = false;
+                newGhost.name = prefab.name;
+
+                foreach (Joint joint in newGhost.GetComponentsInChildren<Joint>())
+                {
+                    UnityEngine.Object.Destroy(joint);
+                }
+
+                foreach (Rigidbody rigidBody in newGhost.GetComponentsInChildren<Rigidbody>())
+                {
+                    UnityEngine.Object.Destroy(rigidBody);
+                }
+
+                int layer = LayerMask.NameToLayer("ghost");
+                foreach (var childTransform in newGhost.GetComponentsInChildren<Transform>())
+                {
+                    childTransform.gameObject.layer = layer;
+                }
+
+                foreach (var terrainModifier in newGhost.GetComponentsInChildren<TerrainModifier>())
+                {
+                    UnityEngine.Object.Destroy(terrainModifier);
+                }
+
+                foreach (GuidePoint guidepoint in newGhost.GetComponentsInChildren<GuidePoint>())
+                {
+                    UnityEngine.Object.Destroy(guidepoint);
+                }
+
+                foreach (Light light in newGhost.GetComponentsInChildren<Light>())
+                {
+                    UnityEngine.Object.Destroy(light);
+                }
+
+                Transform ghostOnlyTransform = newGhost.transform.Find("_GhostOnly");
+                if ((bool)ghostOnlyTransform)
+                {
+                    ghostOnlyTransform.gameObject.SetActive(value: true);
+                }
+
+                foreach (MeshRenderer meshRenderer in newGhost.GetComponentsInChildren<MeshRenderer>())
+                {
+                    if (!(meshRenderer.sharedMaterial == null))
+                    {
+                        Material[] sharedMaterials = meshRenderer.sharedMaterials;
+                        for (int j = 0; j < sharedMaterials.Length; j++)
+                        {
+                            Material material = new Material(sharedMaterials[j]);
+                            material.SetFloat("_RippleDistance", 0f);
+                            material.SetFloat("_ValueNoise", 0f);
+                            sharedMaterials[j] = material;
+                        }
+                        meshRenderer.sharedMaterials = sharedMaterials;
+                        meshRenderer.shadowCastingMode = ShadowCastingMode.Off;
+                    }
+                }
+
+                return newGhost;
+            }
+        }
+
     }
 }

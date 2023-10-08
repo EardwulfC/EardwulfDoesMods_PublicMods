@@ -15,7 +15,7 @@
 
 ### Thunderstore (manual)
 
-  2. Go to Settings > Import local mod > Select `ComfyMassFarming_v1.2.2.zip`.
+  2. Go to Settings > Import local mod > Select `ComfyMassFarming_v1.3.0.zip`.
   3. Click "OK/Import local mod" on the pop-up for information.
 
 ## Instructions
@@ -25,6 +25,11 @@
   * A red plant may also indicate that you lack the resources (seeds) or Stamina to plant it.
 
 ## Changelog
+
+
+### 1.3.0
+
+* Moved code around and created PluginCongfig.cs file to match standard practices on Comfy.
 
 ### 1.2.3
 
