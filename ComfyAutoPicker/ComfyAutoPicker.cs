@@ -65,13 +65,13 @@ namespace ComfyAutoPicker
 
         private void Awake()
         {
-            InvokeRepeating(nameof(CheckAndPick), /*(float)Rng.NextDouble() * 2*/ 1.0f, 0.6f);
+            InvokeRepeating(nameof(CheckAndPick), /*(float)Rng.NextDouble() * 2*/ 1.0f, 0.6f); //Bruce liked 0.6f w/a radius of 0.875f
         }
 
         public void CheckAndPick()
         {
             if (IsModEnabled.Value && Player.m_localPlayer is not null
-                && (transform.position - Player.m_localPlayer.transform.position).sqrMagnitude < Radius.Value * Radius.Value)
+                && (transform.position - Player.m_localPlayer.transform.position).sqrMagnitude < 0.8f * 0.875f) // 0.875f was previous Radius.Value
             {
 
                 List<string> PickableItems = new List<string>()

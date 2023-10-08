@@ -4,5 +4,5 @@
   "author": "EardwulfDoesMods",
   "description": "Fork of gnivler's AutoPicker mod for use on Comfy Valheim.",
   "website_url": "https://github.com/EardwulfC/EardwulfDoesMods_PublicMods/tree/master/",
-  "dependencies": [ "denikson-BepInExPack_Valheim-5.4.2105" ]
+  "dependencies": [ "denikson-BepInExPack_Valheim-5.4.2200" ]
 }
