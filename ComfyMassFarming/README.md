@@ -26,6 +26,9 @@
 
 ## Changelog
 
+### 1.3.1
+
+* Bug Fix to account to reduced stamaina usage with the cultivator when wearing Hildir Clothing.
 
 ### 1.3.0
 
