@@ -1,0 +1,8 @@
+{
+  "name": "ComfyMassFarming",
+  "version_number": "1.2.3",
+  "author": "EardwulfDoesMods",
+  "description": "Fork of Xeio's mass farming mod for use on Comfy Valheim.",
+  "website_url": "https://github.com/EardwulfC/Comfy-Mass-Farming",
+  "dependencies": [ "denikson-BepInExPack_Valheim-5.4.2200" ]
+}
