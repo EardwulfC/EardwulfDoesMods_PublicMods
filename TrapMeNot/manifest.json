@@ -3,6 +3,6 @@
   "version_number": "1.1.1",
   "author": "Eardwulf",
   "description": "Prevents traps from attacking players.",
-  "website_url": "https://github.com/EardwulfC/TrapMeNot",
+  "website_url": "https://github.com/EardwulfC/EardwulfDoesMods_PublicMods/tree/master/",
   "dependencies": [ "denikson-BepInExPack_Valheim-5.4.2200" ]
 }

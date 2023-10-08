@@ -3,6 +3,6 @@
   "version_number": "1.0.0",
   "author": "EardwulfDoesMods",
   "description": "Fork of gnivler's AutoPicker mod for use on Comfy Valheim.",
-  "website_url": "https://github.com/EardwulfC/ComfyComfyAutoPicker/tree/master",
+  "website_url": "https://github.com/EardwulfC/EardwulfDoesMods_PublicMods/tree/master/",
   "dependencies": [ "denikson-BepInExPack_Valheim-5.4.2105" ]
 }
