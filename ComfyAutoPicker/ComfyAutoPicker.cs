@@ -21,11 +21,6 @@ namespace ComfyAutoPicker
 
         Harmony _harmony;
 
-        internal static void L(object input)
-        {
-            //FileLog.Log($"[ComfyAutoPicker] {input?.ToString() ?? "null"}");
-        }
-
         public void Awake()
         {
             _harmony = Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), harmonyInstanceId: PluginGuid);
@@ -65,13 +60,14 @@ namespace ComfyAutoPicker
 
         private void Awake()
         {
-            InvokeRepeating(nameof(CheckAndPick), /*(float)Rng.NextDouble() * 2*/ 1.0f, 0.6f); //Bruce liked 0.6f w/a radius of 0.875f
+            InvokeRepeating(nameof(CheckAndPick), /*(float)Rng.NextDouble() * 2*/ 1.0f, 0.5f);
         }
 
         public void CheckAndPick()
         {
+            // both float values should be the same, please do not change one without changing the other.
             if (IsModEnabled.Value && Player.m_localPlayer is not null
-                && (transform.position - Player.m_localPlayer.transform.position).sqrMagnitude < 0.8f * 0.875f) // 0.875f was previous Radius.Value
+                && (transform.position - Player.m_localPlayer.transform.position).sqrMagnitude < 0.8f * 0.8f) 
             {
 
                 List<string> PickableItems = new List<string>()
@@ -82,14 +78,20 @@ namespace ComfyAutoPicker
                 var pickable = GetComponentInChildren<Pickable>();
                 if (m_picked(pickable))
                 {
+                        return;
+                }
 
+                if (!Player.m_localPlayer || ((Player.m_localPlayer.m_rightItem) != null && Player.m_localPlayer.m_rightItem.m_shared.m_name.Contains("$item_cultivator")))
+                {
+                    //spam the log with unable to pick messages when holding a Cultivator
+                    Chat.m_instance.AddString($"You cannot pick plants when you have a Cultivator Equipped");
                     return;
                 }
-                
-                if(PickableItems.Contains(Utils.GetPrefabName(pickable.name)))
+
+                if (PickableItems.Contains(Utils.GetPrefabName(pickable.name)))
                 {
-                        pickable.Interact(Player.m_localPlayer, false, false);
-                        ZLog.Log($"pickable found and picked ->> {Utils.GetPrefabName(pickable.name)}");
+                    //If its in the list, go ahead and pick it.
+                    pickable.Interact(Player.m_localPlayer, false, false);
                 }
             }
         }
