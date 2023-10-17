@@ -8,7 +8,7 @@ namespace YolkMe
     [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
     public class YolkMe : BaseUnityPlugin
     {
-        public const string PluginGuid = "comfy.valheim.modname";
+        public const string PluginGuid = "eardwulfdoesmods.valheim.modname";
         public const string PluginName = "YolkMe";
         public const string PluginVersion = "1.0.0";
 
@@ -35,7 +35,7 @@ namespace YolkMe
             {
                 GameObject egg = __instance.GetItemPrefab(prefab);
 
-                if (!egg || !Player.m_localPlayer)
+                if (!egg)
                 {
                     return;
                 }
@@ -46,7 +46,7 @@ namespace YolkMe
                     return;
                 }
 
-                
+                ZLog.Log("Adding auto pickup to eggs.");
                 GetItemData.m_autoPickup = true;
             }
 

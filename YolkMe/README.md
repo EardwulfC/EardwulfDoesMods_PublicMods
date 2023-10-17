@@ -1,10 +1,10 @@
 # YolkMe
 
-*Mod description.*
+* A quick little mod to add the autoPickup flag to chicken eggs.
 
 ## Instructions
 
-  * Mod instructions.
+  * Install the mod and enjoy your chicken eggs being flagged for autoPickup.
 
 ## Changelog
 
