@@ -1,0 +1,8 @@
+{
+  "name": "YolkMe",
+  "version_number": "1.0.0",
+  "author": "ComfyMods",
+  "description": "Mod description.",
+  "website_url": "Mod website.",
+  "dependencies": [ "denikson-BepInExPack_Valheim-5.4.2105" ]
+}
