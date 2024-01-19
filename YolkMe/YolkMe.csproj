@@ -102,6 +102,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PluginConfig.cs" />
     <Compile Include="YolkMe.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

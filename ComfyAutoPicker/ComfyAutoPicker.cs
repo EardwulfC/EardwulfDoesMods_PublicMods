@@ -17,7 +17,7 @@ namespace ComfyAutoPicker
     {
         public const string PluginGuid = "EardwulfDoesMods.valheim.ComfyAutoPicker";
         public const string PluginName = "ComfyAutoPicker";
-        public const string PluginVersion = "1.0.0";
+        public const string PluginVersion = "1.1.0";
 
         Harmony _harmony;
 
@@ -63,8 +63,10 @@ namespace ComfyAutoPicker
             InvokeRepeating(nameof(CheckAndPick), /*(float)Rng.NextDouble() * 2*/ 1.0f, 0.5f);
         }
 
+
         public void CheckAndPick()
         {
+
             // both float values should be the same, please do not change one without changing the other.
             if (IsModEnabled.Value && Player.m_localPlayer is not null
                 && (transform.position - Player.m_localPlayer.transform.position).sqrMagnitude < 0.8f * 0.8f) 
@@ -83,8 +85,14 @@ namespace ComfyAutoPicker
 
                 if (!Player.m_localPlayer || ((Player.m_localPlayer.m_rightItem) != null && Player.m_localPlayer.m_rightItem.m_shared.m_name.Contains("$item_cultivator")))
                 {
-                    //spam the log with unable to pick messages when holding a Cultivator
+                    //spam the chat with unable to pick messages when holding a Cultivator
                     Chat.m_instance.AddString($"You cannot pick plants when you have a Cultivator Equipped");
+                    return;
+                }
+
+                if (PickableItems.Contains(Utils.GetPrefabName(pickable.name)) && !PrivateArea.CheckAccess(pickable.transform.position, 0f, true, false))
+                {
+                    Chat.m_instance.AddString($"You are not on the ward for this area");
                     return;
                 }
 

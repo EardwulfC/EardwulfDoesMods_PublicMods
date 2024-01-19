@@ -1,8 +1,8 @@
 {
   "name": "Wardrobe",
-  "version_number": "1.0.0",
-  "author": "ComfyMods",
-  "description": "Mod description.",
-  "website_url": "Mod website.",
+  "version_number": "1.0.1",
+  "author": "EardwulfDoesMods",
+  "description": "Swap your gear with that sexy armorstand over there.  You know you want to.",
+  "website_url": "https://github.com/EardwulfC/EardwulfDoesMods_PublicMods/tree/master/Wardrobe",
   "dependencies": [ "denikson-BepInExPack_Valheim-5.4.2202" ]
 }

@@ -14,7 +14,7 @@ namespace Wardrobe
     {
         public const string PluginGuid = "EardwulfDoesMods.valheim.Wardrobe";
         public const string PluginName = "Wardrobe";
-        public const string PluginVersion = "1.0.0";
+        public const string PluginVersion = "1.0.1";
 
         Harmony _harmony;
 
@@ -77,6 +77,7 @@ namespace Wardrobe
                     ItemDrop itemDrop = ObjectDB.instance.GetItemPrefab(itemstring).GetComponent<ItemDrop>();
                     ItemDrop.LoadFromZDO(i, itemDrop.m_itemData, stand.m_nview.GetZDO());
                     itemlist.Add(itemDrop);
+                    ZLog.Log($"Wardrobe says I removed item {itemDrop.name} From the ArmorStand. Level: {itemDrop.m_itemData.m_quality}");
                     stand.DestroyAttachment(i);
                     stand.m_nview.GetZDO().Set(i.ToString() + "_item", "");
                     stand.m_nview.InvokeRPC(ZNetView.Everybody, "RPC_SetVisualItem", new object[]
@@ -113,6 +114,7 @@ namespace Wardrobe
                         throw new IndexOutOfRangeException("This should never happen! Call a grownup!");
                     }
                     stand.m_queuedItem = equip;
+                    ZLog.Log($"Sending {equip.m_shared.m_name} to the Armor Stand.  Level: {equip.m_quality}");
                     stand.m_queuedSlot = slot;
                     stand.UpdateAttach();
                 }

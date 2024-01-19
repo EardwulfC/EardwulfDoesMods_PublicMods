@@ -9,6 +9,10 @@
 
 ## Changelog
 
+### 1.1.0
+
+  * Added a private area access check to prevent people from picking plants where they not included in the ward.
+
 ### 1.0.0
 
   * Initial release.
