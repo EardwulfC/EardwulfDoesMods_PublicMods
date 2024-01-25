@@ -13,7 +13,7 @@ namespace TrapMeNot
     {
         public const string PluginGuid = "Eardwulf.TrapMeNot";
         public const string PluginName = "TrapMeNot";
-        public const string PluginVersion = "1.1.1";
+        public const string PluginVersion = "1.1.2";
 
         Harmony _harmony;
 
@@ -38,9 +38,9 @@ namespace TrapMeNot
 
                         bool IsComfyDeepNorth = TrapMeNot.IsComfyWorld() && Heightmap.FindBiome(player.transform.position) == Heightmap.Biome.DeepNorth;
                         bool IsComfyAshlands = TrapMeNot.IsComfyWorld() && Heightmap.FindBiome(player.transform.position) == Heightmap.Biome.AshLands;
-                        /*bool IsComfySpaceBiome = TrapMeNot.IsComfyWorld() && TrapMeNot.IsInSpace();*/
+                        bool IsComfySpaceBiome = TrapMeNot.IsComfyWorld() && TrapMeNot.IsInSpace();
 
-                        if (IsComfyDeepNorth || IsComfyAshlands /*|| IsComfySpaceBiome*/)
+                        if (IsComfyDeepNorth || IsComfyAshlands || IsComfySpaceBiome)
                         {
                             return true;
                         }
@@ -64,10 +64,9 @@ namespace TrapMeNot
                 && ZNet.m_world.m_name.StartsWith("ComfyEra");
         }
 
-        /*public static bool IsInSpace()
+        public static bool IsInSpace()
         {
-            return
-            Utils.DistanceXZ(Player.m_localPlayer.transform.position, Vector3.zero) > 10500;
-        }*/
+            return Utils.DistanceXZ(Player.m_localPlayer.transform.position, Vector3.zero) > 10500;
+        }
     }
 }

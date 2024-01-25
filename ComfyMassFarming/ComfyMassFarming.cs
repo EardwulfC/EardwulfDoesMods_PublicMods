@@ -1,5 +1,4 @@
 ﻿using BepInEx;
-using BepInEx.Configuration;
 using HarmonyLib;
 using System.Collections.Generic;
 using System.Linq;
