@@ -41,8 +41,13 @@ namespace ComfyAutoPicker
             [HarmonyPatch(typeof(Pickable), "Awake")]
             public static class PickableAwakePatch
             {
+
+                // Make HashSet Here
+
                 public static void Postfix(Pickable __instance)
                 {
+
+                    // Do check here to see if pickable is in the HashSet
                     __instance.gameObject.AddComponent<ComfyAutoPicker>();
                 }
             }
