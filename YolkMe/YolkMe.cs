@@ -22,44 +22,6 @@ namespace YolkMe
             _harmony = Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), harmonyInstanceId: PluginGuid);
         }
 
-        //[HarmonyPatch(typeof(ObjectDB))]
-
-        //public static class Patch_ObjectDB_Awake
-        //{
-        //    [HarmonyPostfix]
-        //    [HarmonyPatch(nameof(ObjectDB.Awake))]
-
-        //    public static void PostfixEgg(ObjectDB __instance)
-        //    {
-        //        ItemEgg(__instance, "ChickenEgg");
-        //    }
-
-        //    static void ItemEgg(ObjectDB __instance, string prefab)
-        //    {
-        //        GameObject egg = __instance.GetItemPrefab(prefab);
-
-        //        if (!egg)
-        //        {
-        //            return;
-        //        }
-
-        //        var GetItemData = egg.GetComponent<ItemDrop>();
-
-        //        if (!GetItemData)
-        //        {
-        //            return;
-        //        }
-
-        //        if(!IsModEnabled.Value)
-        //        { 
-        //            return;
-        //        }
-
-        //        ZLog.Log("Adding auto pickup to eggs.");
-
-        //        GetItemData.m_autoPickup = true;
-        //    }
-        //}
 
         [HarmonyPatch(typeof(EggGrow))]
         static class EggGrowPatch
