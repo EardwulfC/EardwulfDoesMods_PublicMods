@@ -103,10 +103,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComfyAutoPicker.cs" />
-    <Compile Include="PluginConfig.cs" />
+    <Compile Include="Core\AutoPicker.cs" />
+    <Compile Include="Patches\PickablePatch.cs" />
+    <Compile Include="Config\PluginConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="CHANGELOG.md" />
     <None Include="manifest.json" />
     <None Include="README.md" />
     <None Include="icon.png" />

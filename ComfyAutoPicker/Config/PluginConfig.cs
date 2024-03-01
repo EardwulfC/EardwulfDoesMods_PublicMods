@@ -1,5 +1,4 @@
 using BepInEx.Configuration;
-using UnityEngine;
 
 namespace ComfyAutoPicker
 {
@@ -12,9 +11,6 @@ namespace ComfyAutoPicker
         public static void BindConfig(ConfigFile config)
         {
             IsModEnabled = config.Bind("Global", "IsModEnabled", true, "Globally enable or disable this mod");
-
-            //ToggleEnabledShortcut = config.Bind("Movement", "Enable/Disable Shortcut",
-            //    new KeyboardShortcut(KeyCode.R, KeyCode.RightShift), "Keyboard Shortcut to toggle on/off Auto Picking");
         }
     }
 }
