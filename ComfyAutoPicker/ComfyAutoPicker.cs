@@ -17,7 +17,7 @@ namespace ComfyAutoPicker
     {
         public const string PluginGuid = "EardwulfDoesMods.valheim.ComfyAutoPicker";
         public const string PluginName = "ComfyAutoPicker";
-        public const string PluginVersion = "1.1.0";
+        public const string PluginVersion = "1.2.0";
 
         Harmony _harmony;
 
@@ -27,13 +27,14 @@ namespace ComfyAutoPicker
             BindConfig(Config);
         }
 
-        public void Update()
-        {
-            if (Input.GetKey(ToggleEnabledShortcut.Value.MainKey) && ToggleEnabledShortcut.Value.Modifiers.All(new Func<KeyCode, bool>(Input.GetKeyDown)))
-            {
-                IsModEnabled.Value = !IsModEnabled.Value;
-            }
-        }
+        // removing the toggle hot key, open the F1 menu and toggle manually!
+        //public void Update()
+        //{
+        //    if (Input.GetKey(ToggleEnabledShortcut.Value.MainKey) && ToggleEnabledShortcut.Value.Modifiers.All(new Func<KeyCode, bool>(Input.GetKeyDown)))
+        //    {
+        //        IsModEnabled.Value = !IsModEnabled.Value;
+        //    }
+        //}
 
         public class Patches
         {
@@ -43,12 +44,21 @@ namespace ComfyAutoPicker
             {
 
                 // Make HashSet Here
+                public static readonly HashSet<int> PlantsToAutoPick = new HashSet<int>() {
+                  "Pickable_Barley".GetStableHashCode(), "Pickable_Barley_Wild".GetStableHashCode(), "Pickable_Flax".GetStableHashCode(),
+                  "Pickable_Flax_Wild".GetStableHashCode(), "Pickable_Carrot".GetStableHashCode(), "Pickable_SeedCarrot".GetStableHashCode(),
+                  "Pickable_Turnip".GetStableHashCode(), "Pickable_SeedTurnip".GetStableHashCode(), "Pickable_Onion".GetStableHashCode(),
+                  "Pickable_SeedOnion".GetStableHashCode(), "CloudberryBush".GetStableHashCode(), "Pickable_Mushroom_JotunPuffs".GetStableHashCode(),
+                  "Pickable_Mushroom_Magecap".GetStableHashCode(),
+                };
 
                 public static void Postfix(Pickable __instance)
                 {
-
-                    // Do check here to see if pickable is in the HashSet
-                    __instance.gameObject.AddComponent<ComfyAutoPicker>();
+                    // Do check here to see if pickable is in the HashSet                    
+                    if (IsModEnabled.Value && !PlantsToAutoPick.Contains(__instance.m_nview.m_zdo.m_prefab) && !__instance.m_picked)
+                    {
+                        __instance.gameObject.AddComponent<ComfyAutoPicker>();
+                    }
                 }
             }
         }
@@ -57,17 +67,16 @@ namespace ComfyAutoPicker
 
     internal class ComfyAutoPicker : MonoBehaviour
     {
-
-         private static readonly AccessTools.FieldRef<Pickable, bool> m_picked =
-            AccessTools.FieldRefAccess<Pickable, bool>("m_picked");
-
-        //private static readonly System.Random Rng = new();
+        private static readonly AccessTools.FieldRef<Pickable, bool> m_picked =
+           AccessTools.FieldRefAccess<Pickable, bool>("m_picked");
 
         private void Awake()
         {
-            InvokeRepeating(nameof(CheckAndPick), /*(float)Rng.NextDouble() * 2*/ 1.0f, 0.5f);
-        }
+            if (IsModEnabled.Value) {
 
+                InvokeRepeating(nameof(CheckAndPick), 1.0f, 0.5f);
+            }
+        }
 
         public void CheckAndPick()
         {
@@ -85,7 +94,7 @@ namespace ComfyAutoPicker
                 var pickable = GetComponentInChildren<Pickable>();
                 if (m_picked(pickable))
                 {
-                        return;
+                    return;
                 }
 
                 if (!Player.m_localPlayer || ((Player.m_localPlayer.m_rightItem) != null && Player.m_localPlayer.m_rightItem.m_shared.m_name.Contains("$item_cultivator")))
