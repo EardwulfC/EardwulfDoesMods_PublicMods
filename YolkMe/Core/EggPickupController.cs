@@ -4,7 +4,7 @@
       return itemDrop.m_itemData.m_dropPrefab.name == "ChickenEgg";
     }
 
-    public static readonly float EggPickupDelay = 2f;
+    public static readonly float EggPickupDelay = 1.5f;
     public static float LastEggPickupTime = 0f;
 
     public static bool CanPickupEgg(float currentTime) {
