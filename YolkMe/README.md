@@ -1,6 +1,6 @@
 # YolkMe
 
-* Adds the autoPickup flag to Chicken Eggs that are warm (growing).
+* Adds the autoPickup flag to Chicken Eggs that are cold.
 
 ## Instructions
 
