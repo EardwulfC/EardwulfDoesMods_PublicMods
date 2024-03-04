@@ -8,6 +8,10 @@ namespace YolkMe {
     [HarmonyPostfix]
     [HarmonyPatch(nameof(EggGrow.GrowUpdate))]
     static void GrowUpdatePostfix(EggGrow __instance) {
+
+      if (IsModEnabled.Value && IsPickUpWarmEnabled.Value && __instance.m_nview && __instance.m_nview.IsValid()) {
+        __instance.m_item.m_autoPickup = true;
+      }
       if (IsModEnabled.Value && __instance.m_nview && __instance.m_nview.IsValid()) {
         float growStart = __instance.m_nview.m_zdo.GetFloat(ZDOVars.s_growStart, 0f);
         // growStart is reset to 0 during GrowUpdate() if CanGrow() returns false.
