@@ -1,6 +1,7 @@
 # YolkMe
 
 * Adds the autoPickup flag to Chicken Eggs that are cold.
+* Warm chicken eggs can be picked up by toggling the PickUpAllEnabled flag in the Configuration Manager.
 
 ## Instructions
 

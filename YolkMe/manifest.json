@@ -2,7 +2,7 @@
   "name": "YolkMe",
   "version_number": "1.0.0",
   "author": "EardwulfC",
-  "description": "Adds m_autoPickup to chicken eggs.",
-  "website_url": "Mod website.",
+  "description": "Adds autoPickup to Chicken Eggs",
+  "website_url": "https://github.com/EardwulfC/EardwulfDoesMods_PublicMods/tree/master/YolkMe",
   "dependencies": [ "denikson-BepInExPack_Valheim-5.4.2200" ]
 }
