@@ -88,6 +88,9 @@
     <Reference Include="UnityEngine.InputLegacyModule_publicized">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Valheim\valheim_Data\Managed\publicized_assemblies\UnityEngine.InputLegacyModule_publicized.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.InputModule_publicized">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Valheim\valheim_Data\Managed\publicized_assemblies\UnityEngine.InputModule_publicized.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.PhysicsModule_publicized">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Valheim\valheim_Data\Managed\publicized_assemblies\UnityEngine.PhysicsModule_publicized.dll</HintPath>
     </Reference>
@@ -109,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="manifest.json" />
+    <None Include="CHANGELOG.md" />
     <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -133,7 +137,7 @@
   </Target>
   <Target Name="MakeThunderstorePackage" AfterTargets="GetAssemblyVersion">
     <ItemGroup>
-      <PackageFiles Include="$(TargetDir)$(AssemblyName).dll; README.md; manifest.json; icon.png" />
+      <PackageFiles Include="$(TargetDir)$(AssemblyName).dll; README.md; CHANGELOG.md; manifest.json; icon.png" />
     </ItemGroup>
     <MakeDir Directories="$(PackageDir)" />
     <Copy SourceFiles="@(PackageFiles)" DestinationFolder="$(PackageDir)" />

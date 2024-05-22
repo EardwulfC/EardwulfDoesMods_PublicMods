@@ -16,7 +16,7 @@ namespace MassFarming
     {
         public const string PluginGuid = "EardwulfDoesMods.Comfy.MassFarming";
         public const string PluginName = "Comfy.MassFarming";
-        public const string PluginVersion = "1.3.1";
+        public const string PluginVersion = "1.4.1";
 
         Harmony _harmony;
 
@@ -104,11 +104,11 @@ namespace MassFarming
                     }
 
                     var tool = _GetRightItemMethod.Invoke(__instance, Array.Empty<object>()) as ItemDrop.ItemData;
-                    var hasStamina = __instance.HaveStamina((tool.m_shared.m_attack.m_attackStamina + __instance.GetEquipmentBaseItemModifier()) * 1.7695f);
+                    var hasStamina = __instance.HaveStamina((tool.m_shared.m_attack.m_attackStamina + __instance.GetEquipmentHomeItemModifier()) * 1.7695f);
 
 
-                    ZLog.Log($"Normal Per Plant Stamina: {(tool.m_shared.m_attack.m_attackStamina + __instance.GetEquipmentBaseItemModifier())}, Per Plant Stamina with CMF: {(tool.m_shared.m_attack.m_attackStamina + __instance.GetEquipmentBaseItemModifier()) * 1.7695f}," +
-                        $" Additional Per Plant Stamina with CMF: {(tool.m_shared.m_attack.m_attackStamina + __instance.GetEquipmentBaseItemModifier()) * 1.7695f - (tool.m_shared.m_attack.m_attackStamina + __instance.GetEquipmentBaseItemModifier())}");
+                    ZLog.Log($"Normal Per Plant Stamina: {(tool.m_shared.m_attack.m_attackStamina + __instance.GetEquipmentHomeItemModifier())}, Per Plant Stamina with CMF: {(tool.m_shared.m_attack.m_attackStamina + __instance.GetEquipmentHomeItemModifier()) * 1.7695f}," +
+                        $" Additional Per Plant Stamina with CMF: {(tool.m_shared.m_attack.m_attackStamina + __instance.GetEquipmentHomeItemModifier()) * 1.7695f - (tool.m_shared.m_attack.m_attackStamina + __instance.GetEquipmentHomeItemModifier())}");
 
                     if (!hasStamina)
                     {
@@ -138,7 +138,7 @@ namespace MassFarming
 
                     __instance.ConsumeResources(placedPiece.m_resources, 0, -1);
 
-                    __instance.UseStamina((tool.m_shared.m_attack.m_attackStamina + __instance.GetEquipmentBaseItemModifier()) * 1.7695f); //stamina used for Mass Planting
+                    __instance.UseStamina((tool.m_shared.m_attack.m_attackStamina + __instance.GetEquipmentHomeItemModifier()) * 1.7695f); //stamina used for Mass Planting
 
                     tool.m_durability -= tool.m_shared.m_useDurabilityDrain;
                     if (tool.m_durability <= 0f)
