@@ -1,0 +1,8 @@
+{
+  "name": "ICanSeeClearlyNow",
+  "version_number": "0.0.2",
+  "author": "EardwulfC",
+  "description": "A Comfy Specific fork of ColdSpirit's ValheimNightGamma Mod'.",
+  "website_url": "Mod website.",
+  "dependencies": [ "denikson-BepInExPack_Valheim-5.4.2202" ]
+}
