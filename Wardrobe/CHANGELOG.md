@@ -1,5 +1,11 @@
 ## Changelog
 
+### 1.2.0
+
+  * Added a check to drop items if your inventory is full
+  * Bumped up <LangVersion> to C# 10
+  * Special thank you to OrianaVenture for helping with the update to prevent item deletion!
+
 ### 1.0.1
 
   * Added logging statements to confirm items are being queued correclty.

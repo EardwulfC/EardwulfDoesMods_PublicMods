@@ -6,7 +6,7 @@
 
 ### 1.4.0
 
-* Updated for Mistlands v. 0.218.15
+* Updated for Mistlands `v.0.218.15`
 
 ### 1.3.1
 
