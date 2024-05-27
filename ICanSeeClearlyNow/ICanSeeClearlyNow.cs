@@ -10,7 +10,7 @@ namespace ICanSeeClearlyNow {
   public sealed class ICanSeeClearlyNow : BaseUnityPlugin {
     public const string PluginGuid = "comfy.valheim.ICanSeeClearlyNow";
     public const string PluginName = "ICanSeeClearlyNow";
-    public const string PluginVersion = "0.0.2";
+    public const string PluginVersion = "0.0.3";
 
     Harmony _harmony;
 
@@ -27,9 +27,8 @@ namespace ICanSeeClearlyNow {
 
       [HarmonyPrefix]
       [HarmonyPatch(typeof(RenderSettings), "set_ambientLight")]
-
       static void SetLightPrefix(ref Color value) {
-        if (!IsModEnabled.Value) {
+        if (!IsModEnabled.Value || EnvMan.instance == null) {
           return;
         }
 
@@ -51,8 +50,21 @@ namespace ICanSeeClearlyNow {
 
         float avgColor = (sourceColor.r + sourceColor.g + sourceColor.b) / 3;
 
-        if (GammaValue.Value > avgColor) {
-          sourceColor *= GammaValue.Value / avgColor;
+        if (IsCustomTimer.Value) {
+          float timeofday = EnvMan.instance.GetDayFraction();
+          float icn = IsCustomNight.Value / 24f;
+          float icd = IsCustomDay.Value / 24f;
+
+          if (EnvMan.IsNight() || (icd >= timeofday && timeofday <= icn) || EnvMan.instance.GetCurrentEnvironment().m_alwaysDark) {
+            sourceColor *= GammaValue.Value / avgColor;
+          }
+        }
+
+        if (!IsCustomTimer.Value) {
+          if (EnvMan.IsNight() || EnvMan.instance.GetCurrentEnvironment().m_alwaysDark)
+          {
+            sourceColor *= GammaValue.Value / avgColor;
+          }
         }
         return sourceColor;
       }
