@@ -1,7 +1,7 @@
 # ICanSeeClearlyNow
 
 * A Comfy Specific fork of Coldspirit's GammaMod. See the CHANGELOG for the github link.
-* Mod allows out to adjust your night time brightness.  Also applies to dungeons and the swamp
+* Mod allows out to adjust your night time brightness.  Also applies to dungeons and the Swamp biome
 * The Night period that this mod is active during is based off of the in game night cycle, a custom feature is availabe, see the Instructions
 
 ## Instructions
@@ -18,5 +18,5 @@
 
 ### Thunderstore (manual)
 
-  * Go to Settings > Import local mod > Select `ICanSeeClearlyNow_v0.0.3.zip`.
+  * Go to Settings > Import local mod > Select `ICanSeeClearlyNow_v1.0.0.zip`.
   * Click "OK/Import local mod" on the pop-up for information.

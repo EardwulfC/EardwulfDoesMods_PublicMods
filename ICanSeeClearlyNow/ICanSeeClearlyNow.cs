@@ -10,7 +10,7 @@ namespace ICanSeeClearlyNow {
   public sealed class ICanSeeClearlyNow : BaseUnityPlugin {
     public const string PluginGuid = "EardwulfC.valheim.ICanSeeClearlyNow";
     public const string PluginName = "ICanSeeClearlyNow";
-    public const string PluginVersion = "0.0.3";
+    public const string PluginVersion = "1.0.0";
 
     Harmony _harmony;
 

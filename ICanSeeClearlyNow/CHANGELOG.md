@@ -1,5 +1,9 @@
 ## Changelog
 
+### 1.0.0
+
+  * Bumped version to 1.0.0 for release.
+
 ### 0.0.3
 
   * Changed mod behavior to only be active during the in game night and not all the time
@@ -10,7 +14,7 @@
 
 ### 0.0.2
 
-  * Initial release of ICanSeeClearlyNow, Comfy Specific fork of Coldspirit's GammaMod.
+  * Initial test version of ICanSeeClearlyNow, Comfy Specific fork of Coldspirit's GammaMod.
   * Renamed mod to differentiate between the Comfy Specific version of the mod and the Author's original version
   * Locked the minimum gamma value to 0.3f and maximum value to 0.99f
   * Adjusted code to be closer aligned with Comfy Standards

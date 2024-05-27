@@ -15,7 +15,7 @@ namespace ICanSeeClearlyNow {
       GammaValue = Config.BindInOrder("Gamma Setting", "GammaValue", defaultValue: 0.6f, "Set your Gamma Value between 0.3 and 0.99",
           new AcceptableValueRange<float>(0.3f, 0.99f));
 
-      IsCustomTimer = Config.BindInOrder<bool>("Custom Time", "_IsCustomTimer", false, "Enable or Disable custom Night/Day Values");
+      IsCustomTimer = Config.BindInOrder<bool>("Custom Time", "IsCustomTimer", false, "Enable or Disable custom Night/Day Values");
 
       IsCustomDay = Config.BindInOrder<float>("Custom Time", "IsCustomDay", 6f, "Set a custom Start of Day value.");
 
