@@ -3,6 +3,6 @@
   "version_number": "0.0.3",
   "author": "EardwulfC",
   "description": "A Comfy Specific fork of ColdSpirit's Gamma Mod.",
-  "website_url": "Mod website.",
+  "website_url": "https://github.com/EardwulfC/EardwulfDoesMods_PublicMods.",
   "dependencies": [ "denikson-BepInExPack_Valheim-5.4.2202" ]
 }

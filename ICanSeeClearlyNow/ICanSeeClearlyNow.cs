@@ -8,7 +8,7 @@ using static ICanSeeClearlyNow.PluginConfig;
 namespace ICanSeeClearlyNow {
   [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
   public sealed class ICanSeeClearlyNow : BaseUnityPlugin {
-    public const string PluginGuid = "comfy.valheim.ICanSeeClearlyNow";
+    public const string PluginGuid = "EardwulfC.valheim.ICanSeeClearlyNow";
     public const string PluginName = "ICanSeeClearlyNow";
     public const string PluginVersion = "0.0.3";
 
