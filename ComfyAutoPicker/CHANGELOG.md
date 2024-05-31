@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+### 1.3.0
+  * Bumped up <LangVersion> C# 10
+  * Updated for Ashlands `v0.218.15`
+  * Added Vine Berries (VineAsh) to the list of pickables
+
 ### 1.2.0
 
   * Refactored code to be much less expensive (Thank you Redseiko!)
