@@ -1,5 +1,11 @@
 ## Changelog
 
+### 1.1.0
+
+  * Adjusted check for IsCustomNight to actually work and not just pretend to work.
+  * Added an option to have the mod always on in the Ashlands.  This should supercede other gamma settings
+  * Moved several patches into a separate class
+
 ### 1.0.0
 
   * Bumped version to 1.0.0 for release.
