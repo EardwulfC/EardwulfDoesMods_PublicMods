@@ -1,6 +1,11 @@
 ﻿# Changelog
 
+### 1.3.1
+
+  * Removed logging statement that is spamming logs.
+
 ### 1.3.0
+
   * Bumped up <LangVersion> C# 10
   * Updated for Ashlands `v0.218.15`
   * Added Vine Berries (VineAsh) to the list of pickables

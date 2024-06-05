@@ -1,5 +1,14 @@
 ## Changelog
 
+### 1.1.2
+
+  * Uploaded under the correct team name
+
+### 1.1.1
+
+  * Corrected a bug that would sometimes apply double gamma value when the Ashlands Always On setting was enabled
+  * Adjusted max gamma value to 1.299f
+
 ### 1.1.0
 
   * Adjusted check for IsCustomNight to actually work and not just pretend to work.

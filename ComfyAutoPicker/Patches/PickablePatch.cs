@@ -12,7 +12,6 @@ namespace ComfyAutoPicker {
       if (IsModEnabled.Value && Mod.PlantsToAutoPick.Contains(__instance.m_nview.m_zdo.m_prefab) && !__instance.m_picked) {
 
         __instance.gameObject.AddComponent<AutoPicker>();
-        ZLog.Log($"Adding autopicker component to {__instance}");
       }
     }
   }

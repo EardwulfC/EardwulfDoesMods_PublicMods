@@ -15,5 +15,5 @@
 
 ### Thunderstore (manual)
 
-  2. Go to Settings > Import local mod > Select `ComfyAutoPIcker_v1.3.0.zip`.
+  2. Go to Settings > Import local mod > Select `ComfyAutoPIcker_v1.3.1.zip`.
   3. Click "OK/Import local mod" on the pop-up for information.

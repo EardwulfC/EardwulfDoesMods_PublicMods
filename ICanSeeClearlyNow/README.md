@@ -18,5 +18,5 @@
 
 ### Thunderstore (manual)
 
-  * Go to Settings > Import local mod > Select `ICanSeeClearlyNow_v1.0.0.zip`.
+  * Go to Settings > Import local mod > Select `ICanSeeClearlyNow_v1.1.2.zip`.
   * Click "OK/Import local mod" on the pop-up for information.
