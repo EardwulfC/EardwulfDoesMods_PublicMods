@@ -26,7 +26,7 @@ namespace ComfyAutoPicker
       }
 
       // Distance check.
-      if (Vector3.Distance(transform.position, Player.m_localPlayer.transform.position) > 0.875f)
+      if (Vector3.Distance(transform.position, Player.m_localPlayer.transform.position) > /*0.875f*/ AutoPickRadius.Value)
       {
         return;
       }
@@ -40,7 +40,7 @@ namespace ComfyAutoPicker
       if (Player.m_localPlayer.m_rightItem?.m_dropPrefab.name == "Cultivator")
       {
         //spam the chat with unable to pick messages when holding a Cultivator
-        Chat.m_instance.AddString($"You cannot pick plants when you have a Cultivator equipped.");
+        //Chat.m_instance.AddString($"You cannot pick plants when you have a Cultivator equipped.");
         return;
       }
 

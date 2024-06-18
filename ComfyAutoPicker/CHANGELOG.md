@@ -1,5 +1,11 @@
 ﻿# Changelog
 
+### 1.3.2
+
+  * Changed the auto-picker max distance from a static 0.875f to an allowable range between 0.1f and 0.875f
+  * Removed the Cultivator Spam in the chat log when attempting to auto-pick with a cultivator equipped
+  * you still cannot pick with a cultivator equipped.
+
 ### 1.3.1
 
   * Removed logging statement that is spamming logs.
