@@ -14,7 +14,7 @@ namespace ComfyAutoPicker
   {
     public const string PluginGuid = "EardwulfDoesMods.valheim.ComfyAutoPicker";
     public const string PluginName = "ComfyAutoPicker";
-    public const string PluginVersion = "1.3.2";
+    public const string PluginVersion = "1.3.3";
 
     public static readonly HashSet<int> PlantsToAutoPick = new() {
             "CloudberryBush".GetStableHashCode(),

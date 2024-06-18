@@ -1,5 +1,9 @@
 ﻿# Changelog
 
+### 1.3.3
+
+  * Thank you to shagartz from the Valheim Modding Discord for letting me know that the CHANGELOG was not publishing to Thunderstore, this is now fixed.
+
 ### 1.3.2
 
   * Changed the auto-picker max distance from a static 0.875f to an allowable range between 0.1f and 0.875f
