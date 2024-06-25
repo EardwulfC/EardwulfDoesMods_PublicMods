@@ -26,7 +26,7 @@ namespace ComfyAutoPicker
       }
 
       // Distance check.
-      if (Vector3.Distance(transform.position, Player.m_localPlayer.transform.position) > /*0.875f*/ AutoPickRadius.Value)
+      if (Vector3.Distance(transform.position, Player.m_localPlayer.transform.position) > AutoPickRadius.Value)
       {
         return;
       }

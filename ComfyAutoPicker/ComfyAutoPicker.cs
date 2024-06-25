@@ -14,7 +14,7 @@ namespace ComfyAutoPicker
   {
     public const string PluginGuid = "EardwulfDoesMods.valheim.ComfyAutoPicker";
     public const string PluginName = "ComfyAutoPicker";
-    public const string PluginVersion = "1.3.3";
+    public const string PluginVersion = "1.3.4";
 
     public static readonly HashSet<int> PlantsToAutoPick = new() {
             "CloudberryBush".GetStableHashCode(),
@@ -30,7 +30,9 @@ namespace ComfyAutoPicker
             "Pickable_SeedOnion".GetStableHashCode(),
             "Pickable_Mushroom_JotunPuffs".GetStableHashCode(),
             "Pickable_Mushroom_Magecap".GetStableHashCode(),
-            "VineAsh".GetHashCode()
+            "VineAsh".GetHashCode(),
+            "Pickable_Thistle".GetStableHashCode(),
+            "LuredWisp".GetStableHashCode()
         };
 
     Harmony _harmony;

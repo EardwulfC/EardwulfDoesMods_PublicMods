@@ -1,5 +1,9 @@
 ﻿# Changelog
 
+### 1.3.4
+
+  * Added Pickable_Thistle to list of plants that will be auto-picked.
+
 ### 1.3.3
 
   * Thank you to shagartz from the Valheim Modding Discord for letting me know that the CHANGELOG was not publishing to Thunderstore, this is now fixed.
