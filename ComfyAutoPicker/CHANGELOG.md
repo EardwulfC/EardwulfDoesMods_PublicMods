@@ -1,4 +1,4 @@
-﻿# Changelog
+# Changelog
 
 ### 1.4.0
   * Added Pickable_Fiddlehead to the list of plants that will be auto-picked.
