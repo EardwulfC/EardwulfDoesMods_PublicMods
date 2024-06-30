@@ -1,5 +1,9 @@
 ## Changelog
 
+### 1.3.0
+  * Bumped up <LangVersion> to C# 12
+  * Made swapping your Utility Item optional with a new Config Entry SwapUtilityItem, defaults to true
+
 ### 1.2.0
 
   * Added a check to drop items if your inventory is full

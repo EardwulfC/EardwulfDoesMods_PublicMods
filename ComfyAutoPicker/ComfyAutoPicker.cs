@@ -1,22 +1,22 @@
-﻿using System.Collections.Generic;
+﻿namespace ComfyAutoPicker;
+
+using System.Collections.Generic;
 using System.Reflection;
 
 using BepInEx;
 
 using HarmonyLib;
 
-using static ComfyAutoPicker.PluginConfig;
+using static PluginConfig;
 
-namespace ComfyAutoPicker
+[BepInPlugin(PluginGuid, PluginName, PluginVersion)]
+public class Mod : BaseUnityPlugin
 {
-  [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
-  public class Mod : BaseUnityPlugin
-  {
-    public const string PluginGuid = "EardwulfDoesMods.valheim.ComfyAutoPicker";
-    public const string PluginName = "ComfyAutoPicker";
-    public const string PluginVersion = "1.3.4";
+  public const string PluginGuid = "EardwulfDoesMods.valheim.ComfyAutoPicker";
+  public const string PluginName = "ComfyAutoPicker";
+  public const string PluginVersion = "1.4.0";
 
-    public static readonly HashSet<int> PlantsToAutoPick = new() {
+  public static readonly HashSet<int> PlantsToAutoPick = new() {
             "CloudberryBush".GetStableHashCode(),
             "Pickable_Barley".GetStableHashCode(),
             "Pickable_Barley_Wild".GetStableHashCode(),
@@ -32,20 +32,13 @@ namespace ComfyAutoPicker
             "Pickable_Mushroom_Magecap".GetStableHashCode(),
             "VineAsh".GetHashCode(),
             "Pickable_Thistle".GetStableHashCode(),
-            "LuredWisp".GetStableHashCode()
+            "LuredWisp".GetStableHashCode(),
+            "Pickable_Fiddlehead".GetStableHashCode()
         };
 
-    Harmony _harmony;
-
-    void Awake()
-    {
-      BindConfig(Config);
-      _harmony = Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), harmonyInstanceId: PluginGuid);
-    }
-
-    void OnDestroy()
-    {
-      _harmony?.UnpatchSelf();
-    }
+  void Awake()
+  {
+    BindConfig(Config);
+    Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), harmonyInstanceId: PluginGuid);
   }
 }

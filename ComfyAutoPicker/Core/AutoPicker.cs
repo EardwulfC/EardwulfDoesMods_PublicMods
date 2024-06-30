@@ -1,50 +1,50 @@
-﻿using UnityEngine;
+﻿namespace ComfyAutoPicker;
 
-using static ComfyAutoPicker.PluginConfig;
+using UnityEngine;
 
-namespace ComfyAutoPicker
+using static PluginConfig;
+
+
+public sealed class AutoPicker : MonoBehaviour
 {
-  public sealed class AutoPicker : MonoBehaviour
+  Pickable _pickable;
+
+  void Awake()
   {
-    Pickable _pickable;
+    _pickable = GetComponent<Pickable>();
 
-    void Awake()
+    if (IsModEnabled.Value)
     {
-      _pickable = GetComponent<Pickable>();
+      InvokeRepeating(nameof(CheckAndPick), 1f, 0.425f);
+    }
+  }
 
-      if (IsModEnabled.Value)
-      {
-        InvokeRepeating(nameof(CheckAndPick), 1f, 0.425f);
-      }
+  public void CheckAndPick()
+  {
+    if (!IsModEnabled.Value || !Player.m_localPlayer)
+    {
+      return;
     }
 
-    public void CheckAndPick()
+    // Distance check.
+    if (Vector3.Distance(transform.position, Player.m_localPlayer.transform.position) > AutoPickRadius.Value)
     {
-      if (!IsModEnabled.Value || !Player.m_localPlayer)
-      {
-        return;
-      }
-
-      // Distance check.
-      if (Vector3.Distance(transform.position, Player.m_localPlayer.transform.position) > AutoPickRadius.Value)
-      {
-        return;
-      }
-
-      if (!PrivateArea.CheckAccess(transform.position, 0f, true, false))
-      {
-        Chat.m_instance.AddString($"You are not on the ward for this area.");
-        return;
-      }
-
-      if (Player.m_localPlayer.m_rightItem?.m_dropPrefab.name == "Cultivator")
-      {
-        //spam the chat with unable to pick messages when holding a Cultivator
-        //Chat.m_instance.AddString($"You cannot pick plants when you have a Cultivator equipped.");
-        return;
-      }
-
-      _pickable.Interact(Player.m_localPlayer, false, false);
+      return;
     }
+
+    if (!PrivateArea.CheckAccess(transform.position, 0f, true, false))
+    {
+      Chat.m_instance.AddString($"You are not on the ward for this area.");
+      return;
+    }
+
+    if (Player.m_localPlayer.m_rightItem?.m_dropPrefab.name == "Cultivator")
+    {
+      //spam the chat with unable to pick messages when holding a Cultivator
+      //Chat.m_instance.AddString($"You cannot pick plants when you have a Cultivator equipped.");
+      return;
+    }
+
+    _pickable.Interact(Player.m_localPlayer, false, false);
   }
 }

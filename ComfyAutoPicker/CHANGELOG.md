@@ -1,5 +1,9 @@
 ﻿# Changelog
 
+### 1.4.0
+  * Added Pickable_Fiddlehead to the list of plants that will be auto-picked.
+  * Bumped up <LangVersion> to C# 12
+
 ### 1.3.4
 
   * Added Pickable_Thistle to list of plants that will be auto-picked.

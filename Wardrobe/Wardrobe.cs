@@ -14,14 +14,12 @@ namespace Wardrobe
   {
     public const string PluginGuid = "EardwulfDoesMods.valheim.Wardrobe";
     public const string PluginName = "Wardrobe";
-    public const string PluginVersion = "1.1.0";
-
-    Harmony _harmony;
+    public const string PluginVersion = "1.3.0";
 
     void Awake()
     {
       BindConfig(Config);
-      _harmony = Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), harmonyInstanceId: PluginGuid);
+      Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), harmonyInstanceId: PluginGuid);
     }
 
     [HarmonyPatch(typeof(ArmorStand))]
@@ -63,7 +61,6 @@ namespace Wardrobe
           return false;
         }
       }
-
     }
 
     public static List<ItemDrop> ArmorStandEquip(ArmorStand stand)
@@ -103,7 +100,10 @@ namespace Wardrobe
       playerItems.Add(player.m_legItem);
       playerItems.Add(player.m_helmetItem);
       playerItems.Add(player.m_shoulderItem);
-      playerItems.Add(player.m_utilityItem);
+      if (SwapUtilityItem.Value)
+      {
+        playerItems.Add(player.m_utilityItem);
+      }
       stand.CancelInvoke("UpdateAttach");
       foreach (ItemDrop.ItemData equip in playerItems)
       {
@@ -156,11 +156,6 @@ namespace Wardrobe
       }
 
       return -1;
-    }
-
-    void OnDestroy()
-    {
-      _harmony?.UnpatchSelf();
     }
   }
 }
