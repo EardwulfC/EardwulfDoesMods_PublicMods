@@ -1,9 +1,12 @@
 ﻿using BepInEx;
+
 using HarmonyLib;
+
 using System.Collections.Generic;
 using System.Linq;
 using System;
 using System.Reflection;
+
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -16,7 +19,7 @@ namespace MassFarming
   {
     public const string PluginGuid = "EardwulfDoesMods.Comfy.MassFarming";
     public const string PluginName = "Comfy.MassFarming";
-    public const string PluginVersion = "1.4.1";
+    public const string PluginVersion = "1.4.2";
 
     Harmony _harmony;
 

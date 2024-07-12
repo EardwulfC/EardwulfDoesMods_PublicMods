@@ -1,5 +1,9 @@
 ## Changelog
 
+### 1.4.2
+
+* Updated the Plant Grid Config options to allow for any combination up to a maximum 9
+
 ### 1.4.1
 
 * Moved the Changelog into CHANGELOG.md

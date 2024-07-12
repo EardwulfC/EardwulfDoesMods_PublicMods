@@ -28,11 +28,11 @@ namespace MassFarming
 
       PlantGridWidth = config.Bind("Plant Grid", "Plant Grid Width", 3,
           new ConfigDescription("The width of mass planting grid.  Default value is 3.",
-          new AcceptableValueRange<int>(1, 3)));
+          new AcceptableValueRange<int>(1, 9)));
 
       PlantGridLength = config.Bind("Plant Grid", "Plant Grid Length", 3,
           new ConfigDescription("The lenght of the mass planting grid.  Default value is 3.",
-          new AcceptableValueRange<int>(1, 3)));
+          new AcceptableValueRange<int>(1, 9)));
 
       GridAnchorWidth = config.Bind("PlantGrid", nameof(GridAnchorWidth), true,
         "Planting grid anchor point (width). Default is 'enabled' so the grid will extend left and right from the crosshairs." +
@@ -41,6 +41,18 @@ namespace MassFarming
       GridAnchorLength = config.Bind("PlantGrid", nameof(GridAnchorLength), true,
         "Planting grid anchor point (length). Default is 'enabled' so the grid will extend forward and backward from the crosshairs." +
         "Disable to set the anchor to the side of the grid. Disable both anchors to set to corner.");
+
+      PlantGridLength.SettingChanged += (_, _) => GridSizeChecker();
+      PlantGridWidth.SettingChanged += (_, _) => GridSizeChecker();
+    }
+
+    static void GridSizeChecker()
+    {
+      bool GridGreaterThan9 = PlantGridWidth.Value * PlantGridLength.Value > 9;
+      if (GridGreaterThan9) {
+        PlantGridWidth.Value = 1;
+        PlantGridLength.Value = 1;
+      }
     }
   }
 }
