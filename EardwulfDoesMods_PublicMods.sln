@@ -20,6 +20,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICanSeeClearlyNow", "ICanSeeClearlyNow\ICanSeeClearlyNow.csproj", "{21625AA5-8C9A-4A27-8E03-027E4E3767EA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FightMeBro", "FIghtMeBro\FightMeBro.csproj", "{F4E054CB-55B5-457E-B63B-5D81AAD45F96}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{21625AA5-8C9A-4A27-8E03-027E4E3767EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21625AA5-8C9A-4A27-8E03-027E4E3767EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21625AA5-8C9A-4A27-8E03-027E4E3767EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4E054CB-55B5-457E-B63B-5D81AAD45F96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4E054CB-55B5-457E-B63B-5D81AAD45F96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4E054CB-55B5-457E-B63B-5D81AAD45F96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4E054CB-55B5-457E-B63B-5D81AAD45F96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

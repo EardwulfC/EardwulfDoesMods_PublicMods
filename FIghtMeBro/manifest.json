@@ -1,0 +1,8 @@
+{
+  "name": "FightMeBro",
+  "version_number": "1.0.0",
+  "author": "Eardwulf",
+  "description": "Automatically enables PVP on Character Spawn or Respawn.",
+  "website_url": "Mod website.",
+  "dependencies": [ "denikson-BepInExPack_Valheim-5.4.2202" ]
+}
