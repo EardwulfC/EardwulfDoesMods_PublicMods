@@ -12,7 +12,7 @@ using static PluginConfig;
 [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
 public sealed class FightMeBro : BaseUnityPlugin
 {
-  public const string PluginGuid = "eardwulf.valheim.FightMeBro";
+  public const string PluginGuid = "EardwulfC.valheim.FightMeBro";
   public const string PluginName = "FightMeBro";
   public const string PluginVersion = "1.0.0";
 
