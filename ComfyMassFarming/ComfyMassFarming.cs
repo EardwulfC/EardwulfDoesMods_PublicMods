@@ -19,7 +19,7 @@ namespace MassFarming
   {
     public const string PluginGuid = "EardwulfDoesMods.Comfy.MassFarming";
     public const string PluginName = "Comfy.MassFarming";
-    public const string PluginVersion = "1.4.2";
+    public const string PluginVersion = "1.5.1";
 
     Harmony _harmony;
 
@@ -43,7 +43,7 @@ namespace MassFarming
       private static bool placeSuccessful = false;
 
       [HarmonyPostfix]
-      [HarmonyPatch(typeof(Player), "PlacePiece")]
+      [HarmonyPatch(typeof(Player), "TryPlacePiece")]
       public static void PlacePiecePostfix(Player __instance, ref bool __result, Piece piece)
       {
         placeSuccessful = __result;
@@ -138,6 +138,7 @@ namespace MassFarming
           }
           placedPiece.m_placeEffect.Create(newPos, placedRotation, newPlaceObj.transform);
           Game.instance.IncrementPlayerStat(PlayerStatType.Builds);
+          __instance.RaiseSkill(Skills.SkillType.Farming);
 
           __instance.ConsumeResources(placedPiece.m_resources, 0, -1);
 

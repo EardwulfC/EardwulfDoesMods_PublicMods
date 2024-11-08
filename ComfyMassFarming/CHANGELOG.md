@@ -1,5 +1,13 @@
 ## Changelog
 
+### 1.5.1
+
+* Patched for the new Farming Skill to give credit per plant planted.
+
+### 1.5.0
+
+* Updated For Valheim version 0.219.19 (BogWitch)
+
 ### 1.4.2
 
 * Updated the Plant Grid Config options to allow for any combination up to a maximum 9
