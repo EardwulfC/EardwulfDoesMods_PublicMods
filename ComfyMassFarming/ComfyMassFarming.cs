@@ -19,7 +19,7 @@ namespace MassFarming
   {
     public const string PluginGuid = "EardwulfDoesMods.Comfy.MassFarming";
     public const string PluginName = "Comfy.MassFarming";
-    public const string PluginVersion = "1.5.1";
+    public const string PluginVersion = "1.5.2";
 
     Harmony _harmony;
 
@@ -32,7 +32,6 @@ namespace MassFarming
     [HarmonyPatch]
     public class MassPlant
     {
-      private static FieldInfo m_noPlacementCostField = AccessTools.Field(typeof(Player), "m_noPlacementCost");
       private static FieldInfo m_placementGhostField = AccessTools.Field(typeof(Player), "m_placementGhost");
       private static FieldInfo m_buildPiecesField = AccessTools.Field(typeof(Player), "m_buildPieces");
       private static MethodInfo _GetRightItemMethod = AccessTools.Method(typeof(Humanoid), "GetRightItem");
@@ -107,11 +106,7 @@ namespace MassFarming
           }
 
           var tool = _GetRightItemMethod.Invoke(__instance, Array.Empty<object>()) as ItemDrop.ItemData;
-          var hasStamina = __instance.HaveStamina((tool.m_shared.m_attack.m_attackStamina + __instance.GetEquipmentHomeItemModifier()) * 1.7695f);
-
-
-          //ZLog.Log($"Normal Per Plant Stamina: {(tool.m_shared.m_attack.m_attackStamina + __instance.GetEquipmentHomeItemModifier())}, Per Plant Stamina with CMF: {(tool.m_shared.m_attack.m_attackStamina + __instance.GetEquipmentHomeItemModifier()) * 1.7695f}," +
-          //    $" Additional Per Plant Stamina with CMF: {(tool.m_shared.m_attack.m_attackStamina + __instance.GetEquipmentHomeItemModifier()) * 1.7695f - (tool.m_shared.m_attack.m_attackStamina + __instance.GetEquipmentHomeItemModifier())}");
+          bool hasStamina = __instance.HaveStamina((tool.m_shared.m_attack.m_attackStamina + __instance.GetEquipmentHomeItemModifier()) * 1.7695f);
 
           if (!hasStamina)
           {
@@ -119,7 +114,7 @@ namespace MassFarming
             return;
           }
 
-          var hasMats = (bool)m_noPlacementCostField.GetValue(__instance) || __instance.HaveRequirements(placedPiece, Player.RequirementMode.CanBuild);
+          bool hasMats = __instance.HaveRequirements(placedPiece, Player.RequirementMode.IsKnown);
           if (!hasMats)
           {
             return;
@@ -276,19 +271,23 @@ namespace MassFarming
           if (ghost.GetComponent<Piece>().m_cultivatedGroundOnly && !heightmap.IsCultivated(newPos))
           {
             invalid = true;
+            //ZLog.Log("This ground isn't cultivated.");
           }
           else if (!HasGrowSpace(newPos, ghost.gameObject))
           {
             invalid = true;
+            //ZLog.Log("Not enough grow space");
           }
           else if (currentStamina < tool.m_shared.m_attack.m_attackStamina * 1.7999f)
           {
             Hud.instance.StaminaBarUppgradeFlash();
             invalid = true;
+            //ZLog.Log("Insufficent stamina found.");
           }
-          else if (!(bool)m_noPlacementCostField.GetValue(__instance) && !__instance.HaveRequirements(_fakeResourcePiece, Player.RequirementMode.CanBuild))
+          else if (!__instance.HaveRequirements(_fakeResourcePiece, Player.RequirementMode.IsKnown))
           {
             invalid = true;
+            //ZLog.Log("Not enough resources.");
           }
           currentStamina -= tool.m_shared.m_attack.m_attackStamina * 1.7999f;
 

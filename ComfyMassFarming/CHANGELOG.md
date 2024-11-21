@@ -1,12 +1,16 @@
 ## Changelog
 
+### 1.5.2
+
+* Recompiled for 0.219.16
+
 ### 1.5.1
 
 * Patched for the new Farming Skill to give credit per plant planted.
 
 ### 1.5.0
 
-* Updated For Valheim version 0.219.19 (BogWitch)
+* Updated For Valheim version 0.219.14 (BogWitch)
 
 ### 1.4.2
 
