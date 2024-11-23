@@ -10,7 +10,7 @@
 
 ### Thunderstore (manual)
 
-  * Go to Settings > Import local mod > Select `TrapMeNot_v1.3.0.zip`.
+  * Go to Settings > Import local mod > Select `TrapMeNot_v1.4.0.zip`.
   * Click "OK/Import local mod" on the pop-up for information.
 
 ## Instructions

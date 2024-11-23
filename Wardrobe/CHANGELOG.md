@@ -1,5 +1,8 @@
 ## Changelog
 
+### 1.4.0
+  * Made swapping your cloak/cape optiona with a new Config Entry SwapCloakItem, defaults to true
+
 ### 1.3.0
   * Bumped up <LangVersion> to C# 12
   * Made swapping your Utility Item optional with a new Config Entry SwapUtilityItem, defaults to true
