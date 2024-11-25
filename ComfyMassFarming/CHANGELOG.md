@@ -1,5 +1,9 @@
 ## Changelog
 
+### 1.5.3
+
+* Corrected an issue that would occasionaly cause issues with mass planting too many plants
+
 ### 1.5.2
 
 * Recompiled for 0.219.16

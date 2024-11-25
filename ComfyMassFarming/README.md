@@ -15,7 +15,7 @@
 
 ### Thunderstore (manual)
 
-  2. Go to Settings > Import local mod > Select `ComfyMassFarming_v1.5.2.zip`.
+  2. Go to Settings > Import local mod > Select `ComfyMassFarming_v1.5.3.zip`.
   3. Click "OK/Import local mod" on the pop-up for information.
 
 ## Instructions

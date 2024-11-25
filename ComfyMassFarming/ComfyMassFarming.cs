@@ -19,7 +19,7 @@ namespace MassFarming
   {
     public const string PluginGuid = "EardwulfDoesMods.Comfy.MassFarming";
     public const string PluginName = "Comfy.MassFarming";
-    public const string PluginVersion = "1.5.2";
+    public const string PluginVersion = "1.5.3";
 
     Harmony _harmony;
 
@@ -32,6 +32,7 @@ namespace MassFarming
     [HarmonyPatch]
     public class MassPlant
     {
+      private static readonly FieldInfo m_noPlacementCostField = AccessTools.Field(typeof(Player), "m_noPlacementCost");
       private static FieldInfo m_placementGhostField = AccessTools.Field(typeof(Player), "m_placementGhost");
       private static FieldInfo m_buildPiecesField = AccessTools.Field(typeof(Player), "m_buildPieces");
       private static MethodInfo _GetRightItemMethod = AccessTools.Method(typeof(Humanoid), "GetRightItem");
@@ -114,7 +115,7 @@ namespace MassFarming
             return;
           }
 
-          bool hasMats = __instance.HaveRequirements(placedPiece, Player.RequirementMode.IsKnown);
+          bool hasMats = (bool)m_noPlacementCostField.GetValue(__instance) || __instance.HaveRequirements(placedPiece, Player.RequirementMode.CanBuild);
           if (!hasMats)
           {
             return;
@@ -284,7 +285,8 @@ namespace MassFarming
             invalid = true;
             //ZLog.Log("Insufficent stamina found.");
           }
-          else if (!__instance.HaveRequirements(_fakeResourcePiece, Player.RequirementMode.IsKnown))
+          else if (!(bool)m_noPlacementCostField.GetValue(__instance) && 
+              !__instance.HaveRequirements(_fakeResourcePiece, Player.RequirementMode.CanBuild))
           {
             invalid = true;
             //ZLog.Log("Not enough resources.");
