@@ -1,5 +1,9 @@
 ## Changelog
 
+### 1.5.4
+
+* Fixed a NRE that was fixed in 1.5.2 that was reintroduced in 1.5.3
+
 ### 1.5.3
 
 * Corrected an issue that would occasionaly cause issues with mass planting too many plants

@@ -19,7 +19,7 @@ namespace MassFarming
   {
     public const string PluginGuid = "EardwulfDoesMods.Comfy.MassFarming";
     public const string PluginName = "Comfy.MassFarming";
-    public const string PluginVersion = "1.5.3";
+    public const string PluginVersion = "1.5.4";
 
     Harmony _harmony;
 
@@ -32,7 +32,7 @@ namespace MassFarming
     [HarmonyPatch]
     public class MassPlant
     {
-      private static readonly FieldInfo m_noPlacementCostField = AccessTools.Field(typeof(Player), "m_noPlacementCost");
+      private static FieldInfo m_noPlacementCostField = AccessTools.Field(typeof(Player), "m_noPlacementCost");
       private static FieldInfo m_placementGhostField = AccessTools.Field(typeof(Player), "m_placementGhost");
       private static FieldInfo m_buildPiecesField = AccessTools.Field(typeof(Player), "m_buildPieces");
       private static MethodInfo _GetRightItemMethod = AccessTools.Method(typeof(Humanoid), "GetRightItem");
@@ -107,6 +107,7 @@ namespace MassFarming
           }
 
           var tool = _GetRightItemMethod.Invoke(__instance, Array.Empty<object>()) as ItemDrop.ItemData;
+
           bool hasStamina = __instance.HaveStamina((tool.m_shared.m_attack.m_attackStamina + __instance.GetEquipmentHomeItemModifier()) * 1.7695f);
 
           if (!hasStamina)
@@ -115,7 +116,8 @@ namespace MassFarming
             return;
           }
 
-          bool hasMats = (bool)m_noPlacementCostField.GetValue(__instance) || __instance.HaveRequirements(placedPiece, Player.RequirementMode.CanBuild);
+          bool hasMats = (bool)m_noPlacementCostField.GetValue(__instance) ||
+            __instance.HaveRequirements(placedPiece, Player.RequirementMode.CanBuild);
           if (!hasMats)
           {
             return;
@@ -193,14 +195,14 @@ namespace MassFarming
       }
 
       private static GameObject[] _placementGhosts = new GameObject[1];
-      private static Piece _fakeResourcePiece = new Piece()
-      {
-        m_dlc = string.Empty,
-        m_resources = new Piece.Requirement[]
-          {
-                new Piece.Requirement()
-          }
-      };
+      private static Piece _fakeResourcePiece;// = new Piece()
+      //{
+      //  m_dlc = string.Empty,
+      //  m_resources = new Piece.Requirement[]
+      //    {
+      //          new Piece.Requirement()
+      //    }
+      //};
 
       [HarmonyPostfix]
       [HarmonyPatch(typeof(Player), "SetupPlacementGhost")]
@@ -285,7 +287,7 @@ namespace MassFarming
             invalid = true;
             //ZLog.Log("Insufficent stamina found.");
           }
-          else if (!(bool)m_noPlacementCostField.GetValue(__instance) && 
+          else if (!(bool)m_noPlacementCostField.GetValue(__instance) &&
               !__instance.HaveRequirements(_fakeResourcePiece, Player.RequirementMode.CanBuild))
           {
             invalid = true;
@@ -328,6 +330,17 @@ namespace MassFarming
             //No prefab, so don't need ghost (this probably shouldn't ever happen)
             return false;
           }
+
+          if (!_fakeResourcePiece)
+          {
+            _fakeResourcePiece = _placementGhosts[0].GetComponent<Piece>();
+            _fakeResourcePiece.m_dlc = string.Empty;
+            _fakeResourcePiece.m_resources = new Piece.Requirement[]
+            {
+              new Piece.Requirement()
+            };
+          }
+
         }
 
         return true;
@@ -343,6 +356,7 @@ namespace MassFarming
             _placementGhosts[i] = null;
           }
         }
+        _fakeResourcePiece = null;
       }
 
       private static void SetGhostsActive(bool active)
