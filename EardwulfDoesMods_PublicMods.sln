@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICanSeeClearlyNow", "ICanSe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FightMeBro", "FIghtMeBro\FightMeBro.csproj", "{F4E054CB-55B5-457E-B63B-5D81AAD45F96}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OhBeehive", "OhBeehive\OhBeehive.csproj", "{DA885EBE-3D04-4039-8A85-58847B91C3A0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +58,10 @@ Global
 		{F4E054CB-55B5-457E-B63B-5D81AAD45F96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4E054CB-55B5-457E-B63B-5D81AAD45F96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4E054CB-55B5-457E-B63B-5D81AAD45F96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA885EBE-3D04-4039-8A85-58847B91C3A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA885EBE-3D04-4039-8A85-58847B91C3A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA885EBE-3D04-4039-8A85-58847B91C3A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA885EBE-3D04-4039-8A85-58847B91C3A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

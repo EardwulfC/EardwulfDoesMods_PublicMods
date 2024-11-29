@@ -1,0 +1,8 @@
+{
+  "name": "OhBeehive",
+  "version_number": "1.0.0",
+  "author": "EardwulfDoesMods",
+  "description": "Bold beekeepers battle buzzing bees.",
+  "website_url": "https://github.com/EardwulfC/EardwulfDoesMods_PublicMods/tree/master/",
+  "dependencies": [ "denikson-BepInExPack_Valheim-5.4.2202" ]
+}
