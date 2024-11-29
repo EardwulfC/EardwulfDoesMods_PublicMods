@@ -15,6 +15,7 @@ static class BeehivePatch
     if (IsModEnabled.Value && __instance.GetHoneyLevel() > 0)
     {
       __instance.gameObject.AddComponent<HoneyExtractor>();
+      ZLog.Log($"Attaching HoneyExtractor component.");
     }
   }
 }

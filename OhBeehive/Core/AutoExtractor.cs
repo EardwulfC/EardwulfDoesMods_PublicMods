@@ -35,5 +35,6 @@ public sealed class HoneyExtractor : MonoBehaviour
       return;
     }
     _beehive.Extract();
+    ZLog.Log($"Attempting Honey Extraction");
   }
 }
