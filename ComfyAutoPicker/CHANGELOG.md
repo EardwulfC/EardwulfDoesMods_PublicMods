@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.5.0
+  * Recompiled for 0.219.16
+  * Adjusted the AutoPick Radius to be approximately the same radius as that of using the Scythe.
+
 ### 1.4.0
   * Added Pickable_Fiddlehead to the list of plants that will be auto-picked.
   * Bumped up <LangVersion> to C# 12

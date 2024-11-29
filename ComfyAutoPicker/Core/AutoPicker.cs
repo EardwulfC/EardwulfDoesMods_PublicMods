@@ -27,9 +27,30 @@ public sealed class AutoPicker : MonoBehaviour
     }
 
     // Distance check.
-    if (Vector3.Distance(transform.position, Player.m_localPlayer.transform.position) > AutoPickRadius.Value)
+    bool flag1 = Player.m_localPlayer.m_rightItem?.m_dropPrefab.name == "Scythe";
+    //AutoHarvestRadiusAdjustmentValue (AHRAV) is used to modify the AutoHarvestRadius to make
+    //it equivalent to the attack radius of the scythe.
+    float AHRAV = 1.5f;
+
+    if (!flag1)
     {
-      return;
+      if (Vector3.Distance(transform.position, Player.m_localPlayer.transform.position) > AutoPickRadius.Value)
+      {
+        return;
+      }
+    }
+
+    if (flag1)
+    {
+      float harvestRadius = Player.m_localPlayer.m_rightItem.m_shared.m_attack.m_harvestRadius;
+      float harvestRadiusMaxLevel = Player.m_localPlayer.m_rightItem.m_shared.m_attack.m_harvestRadiusMaxLevel;
+      float skillFactor = Player.m_localPlayer.GetSkillFactor(Skills.SkillType.Farming);
+      float AutoHarvestRadius = Mathf.Lerp(harvestRadius, harvestRadiusMaxLevel, skillFactor) + AHRAV;
+
+      if (Vector3.Distance(transform.position, Player.m_localPlayer.transform.position) > AutoHarvestRadius)
+      {
+        return;
+      }
     }
 
     if (!PrivateArea.CheckAccess(transform.position, 0f, true, false))
@@ -40,8 +61,6 @@ public sealed class AutoPicker : MonoBehaviour
 
     if (Player.m_localPlayer.m_rightItem?.m_dropPrefab.name == "Cultivator")
     {
-      //spam the chat with unable to pick messages when holding a Cultivator
-      //Chat.m_instance.AddString($"You cannot pick plants when you have a Cultivator equipped.");
       return;
     }
 
