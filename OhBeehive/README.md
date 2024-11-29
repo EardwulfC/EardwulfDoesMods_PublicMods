@@ -15,4 +15,4 @@
 
 ## Instructions
 
-  * Using a keybind (default Left Alt) you can AOE pick those lucious behives.
+  * Walk past your beehives and watch your honey come popping out.
