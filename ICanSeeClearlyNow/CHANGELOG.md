@@ -1,5 +1,9 @@
 ## Changelog
 
+### 1.1.3
+  * Recompiled for Valheim version 0.219.16
+  * Correctd mis-matched version numbers for the mod
+
 ### 1.1.2
 
   * Uploaded under the correct team name
