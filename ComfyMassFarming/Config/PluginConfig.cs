@@ -21,7 +21,7 @@ namespace MassFarming
 
       ControllerPickupHotkey = config.Bind("Hotkeys", nameof(ControllerPickupHotkey),
           new KeyboardShortcut(KeyCode.JoystickButton4),
-          "Mass activation hotkey for multi-pickup/multi-plant for controller.");
+          "Mass activation hotkey for multi-plant for controller.");
 
       NoActionKeyNeeded = config.Bind("Override Grid Plant", nameof(NoActionKeyNeeded), false,
           "Enable or disable grid planting without an action key");
