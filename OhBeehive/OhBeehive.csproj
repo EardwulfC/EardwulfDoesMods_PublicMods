@@ -102,10 +102,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\AutoExtractor.cs" />
     <Compile Include="Config\PluginConfig.cs" />
     <Compile Include="OhBeehive.cs" />
+    <Compile Include="Patches\BeehiveMonitor.cs" />
     <Compile Include="Patches\BeehivePatch.cs" />
+    <Compile Include="Core\HoneyExtractionManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

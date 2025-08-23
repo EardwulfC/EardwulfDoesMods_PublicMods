@@ -10,7 +10,7 @@
 
 ### Thunderstore (manual)
 
-  1. Go to Settings > Import local mod > Select `OhBeehive_v1.0.0.zip`.
+  1. Go to Settings > Import local mod > Select `OhBeehive_v1.0.1.zip`.
   2. Click "OK/Import local mod" on the pop-up for information.
 
 ## Instructions

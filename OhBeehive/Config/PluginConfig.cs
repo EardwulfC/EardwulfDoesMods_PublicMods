@@ -12,6 +12,6 @@ public static class PluginConfig
     IsModEnabled = config.Bind("_Global", "IsModEnabled", true, "Enable or Disable this mod");
     AutoExtractRange = config.Bind("Extract", "AutoExtractRange", 1f,
       new ConfigDescription("Range to extract Honey.",
-        new AcceptableValueRange<float>(0.875f, 1.5f)));
+        new AcceptableValueRange<float>(0.875f, 3f)));
   }
 }

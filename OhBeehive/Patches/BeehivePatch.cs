@@ -12,10 +12,11 @@ static class BeehivePatch
 
   static void AwakePostFix(Beehive __instance)
   {
-    if (IsModEnabled.Value && __instance.GetHoneyLevel() > 0)
+    if (IsModEnabled.Value) // && __instance.GetHoneyLevel() > 0)
     {
-      __instance.gameObject.AddComponent<HoneyExtractor>();
-      ZLog.Log($"Attaching HoneyExtractor component.");
+      __instance.gameObject.AddComponent<BeehiveMonitor>();
+      HoneyExtractionManager.Instance.RegisterBeehive(__instance);
+      OhBeehive._logger.LogInfo($"A Beehive has registered itself to the manager.");
     }
   }
 }
