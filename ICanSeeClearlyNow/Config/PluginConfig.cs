@@ -13,7 +13,7 @@ namespace ICanSeeClearlyNow {
     public static void BindConfig(ConfigFile Config) {
       IsModEnabled = Config.BindInOrder<bool>("_Global", "isModEnabled", true, "Globally enable or disable the mode.");
 
-      GammaValue = Config.BindInOrder("Gamma Setting", "GammaValue", defaultValue: 0.6f, "Set your Gamma Value between 0.3 and 0.99",
+      GammaValue = Config.BindInOrder("Gamma Setting", "GammaValue", defaultValue: 0.6f, "Set your Gamma Value between 0.3 and 1.299",
           new AcceptableValueRange<float>(0.3f, 1.299f));
 
       IsAshlandsAlwaysOn = Config.BindInOrder<bool>("Always On Options", "IsAshlandsAlwaysOn", false, "Always have Gamma Adjustment in the Ashlands");

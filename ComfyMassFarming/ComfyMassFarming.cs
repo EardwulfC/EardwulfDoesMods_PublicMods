@@ -195,14 +195,7 @@ public class MassFarming : BaseUnityPlugin
     }
 
     private static GameObject[] _placementGhosts = new GameObject[1];
-    private static Piece _fakeResourcePiece;// = new Piece()
-                                            //{
-                                            //  m_dlc = string.Empty,
-                                            //  m_resources = new Piece.Requirement[]
-                                            //    {
-                                            //          new Piece.Requirement()
-                                            //    }
-                                            //};
+    private static Piece _fakeResourcePiece;
 
     [HarmonyPostfix]
     [HarmonyPatch(typeof(Player), "SetupPlacementGhost")]
@@ -274,24 +267,20 @@ public class MassFarming : BaseUnityPlugin
         if (ghost.GetComponent<Piece>().m_cultivatedGroundOnly && !heightmap.IsCultivated(newPos))
         {
           invalid = true;
-          //ZLog.Log("This ground isn't cultivated.");
         }
         else if (!HasGrowSpace(newPos, ghost.gameObject))
         {
           invalid = true;
-          //ZLog.Log("Not enough grow space");
         }
         else if (currentStamina < tool.m_shared.m_attack.m_attackStamina * 1.7999f)
         {
           Hud.instance.StaminaBarUppgradeFlash();
           invalid = true;
-          //ZLog.Log("Insufficent stamina found.");
         }
         else if (!(bool)m_noPlacementCostField.GetValue(__instance) &&
             !__instance.HaveRequirements(_fakeResourcePiece, Player.RequirementMode.CanBuild))
         {
           invalid = true;
-          //ZLog.Log("Not enough resources.");
         }
         currentStamina -= tool.m_shared.m_attack.m_attackStamina * 1.7999f;
 
@@ -433,5 +422,4 @@ public class MassFarming : BaseUnityPlugin
       return newGhost;
     }
   }
-
 }
