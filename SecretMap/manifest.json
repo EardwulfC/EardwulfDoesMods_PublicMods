@@ -1,0 +1,8 @@
+{
+  "name": "SecretMap",
+  "version_number": "1.0.0",
+  "author": "EardwulfC",
+  "description": "Turn off your Shared Map (Cartography Table) by default.",
+  "website_url": "Mod website.",
+  "dependencies": [ "denikson-BepInExPack_Valheim-5.4.2202" ]
+}
