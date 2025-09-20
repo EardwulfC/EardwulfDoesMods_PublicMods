@@ -26,8 +26,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OhBeehive", "OhBeehive\OhBe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecretMap", "SecretMap\SecretMap.csproj", "{9494F260-EF8B-4506-8CDC-5A76762AF043}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsgardianAudioAdjuster", "AsgardianAudioAdjuster\AsgardianAudioAdjuster.csproj", "{09C4037E-CA9D-457B-B8D4-B35BA080C266}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,10 +68,6 @@ Global
 		{9494F260-EF8B-4506-8CDC-5A76762AF043}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{9494F260-EF8B-4506-8CDC-5A76762AF043}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9494F260-EF8B-4506-8CDC-5A76762AF043}.Release|Any CPU.Build.0 = Release|Any CPU
-		{09C4037E-CA9D-457B-B8D4-B35BA080C266}.Debug|Any CPU.ActiveCfg = Release|Any CPU
-		{09C4037E-CA9D-457B-B8D4-B35BA080C266}.Debug|Any CPU.Build.0 = Release|Any CPU
-		{09C4037E-CA9D-457B-B8D4-B35BA080C266}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{09C4037E-CA9D-457B-B8D4-B35BA080C266}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
