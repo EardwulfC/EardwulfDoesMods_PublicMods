@@ -1,5 +1,13 @@
 # Changelog
 
+### 1.6.0
+  * Recompiled for Call To Arms `v0.221.4`
+  * Balancing Change - Added Durability usage to the Scythe, calculated on a per plant basis
+  * Balancing Change - Added Stamina usage to the Scythe, calculated on a per plant basis
+  * Corrected a bug that was incorrectly increasing the scythe radius by an additional 1.5 meters on top of the Farming skill range increase
+  * Removed the chat message about not being on the ward for the area - the flashing ward tells you that already.
+  * Updated The BepInEx Dependency to version `denikson-BepInExPack_Valheim-5.4.2333`
+
 ### 1.5.0
   * Recompiled for 0.219.16
   * Adjusted the AutoPick Radius to be approximately the same radius as that of using the Scythe.
@@ -20,7 +28,7 @@
 
   * Changed the auto-picker max distance from a static 0.875f to an allowable range between 0.1f and 0.875f
   * Removed the Cultivator Spam in the chat log when attempting to auto-pick with a cultivator equipped
-  * you still cannot pick with a cultivator equipped.
+  * You still cannot pick with a cultivator equipped.
 
 ### 1.3.1
 

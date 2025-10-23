@@ -14,7 +14,7 @@ public class Mod : BaseUnityPlugin
 {
   public const string PluginGuid = "EardwulfDoesMods.valheim.ComfyAutoPicker";
   public const string PluginName = "ComfyAutoPicker";
-  public const string PluginVersion = "1.5.0";
+  public const string PluginVersion = "1.6.0";
 
   public static readonly HashSet<int> PlantsToAutoPick = new() {
             "CloudberryBush".GetStableHashCode(),
