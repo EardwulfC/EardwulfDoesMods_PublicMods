@@ -44,6 +44,19 @@ public sealed class AutoPicker : MonoBehaviour
     };
   }
 
+  private float GetDurabilityPenalty(float skillLevel)
+  {
+    return skillLevel switch
+    {
+      < 25            => 1.0f,  // No penalty
+      >= 25 and < 50  => 1.01f, // 1% penalty
+      >=50 and < 75   => 1.03f, // 3% penalty
+      >= 75 and < 100 => 1.05f, // 5% penalty
+      >= 100          => 1.07f, // 7% penalty
+      _               => 1.0f   // No penalty
+    };
+  }
+
   public void CheckAndPick()
   {
     if (!IsModEnabled.Value || !Player.m_localPlayer)
@@ -97,6 +110,7 @@ public sealed class AutoPicker : MonoBehaviour
       ItemDrop.ItemData scythe = player.m_rightItem;
       bool hasStamina = false;
       float staminaPerPlant = 0f;
+      float durabilityPenalty = 0f;
 
       if (plantsPerSwing > 0)
       {
@@ -107,6 +121,8 @@ public sealed class AutoPicker : MonoBehaviour
         staminaPerPlant = staminaPerSwing / plantsPerSwing;
 
         hasStamina = player.HaveStamina(staminaPerPlant);
+
+        durabilityPenalty = GetDurabilityPenalty(farmingSkill);
       }
 
       if (scythe.m_durability <= 0f || plantsPerSwing <= 0 || !hasStamina)
@@ -116,7 +132,7 @@ public sealed class AutoPicker : MonoBehaviour
 
       if (_pickable.Interact(Player.m_localPlayer, false, false))
       {
-        float durabilityPerPlant = (scythe.m_shared.m_useDurabilityDrain / plantsPerSwing) * 1.05f;
+        float durabilityPerPlant = ((scythe.m_shared.m_useDurabilityDrain / plantsPerSwing) * 1.05f) * durabilityPenalty;
 
         scythe.m_durability -= durabilityPerPlant;
         player.UseStamina(staminaPerPlant);
