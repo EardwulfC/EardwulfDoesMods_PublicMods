@@ -68,10 +68,6 @@ public sealed class AutoPicker : MonoBehaviour
     bool hasScythe = player.m_rightItem?.m_dropPrefab.name == "Scythe";
     bool hasCultivator = player.m_rightItem?.m_dropPrefab.name == "Cultivator";
 
-    //AutoHarvestRadiusAdjustmentValue (AHRAV) is used to modify the AutoHarvestRadius to make
-    //it equivalent to the attack radius of the scythe.
-    //float AHRAV = 1.5f;
-
     if (!hasScythe)
     {
       if (Vector3.Distance(transform.position, player.transform.position) > AutoPickRadius.Value)
