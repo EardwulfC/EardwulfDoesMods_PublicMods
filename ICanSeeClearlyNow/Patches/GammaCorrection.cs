@@ -43,6 +43,7 @@ namespace ICanSeeClearlyNow
       float avgColor = (sourceColor.r + sourceColor.g + sourceColor.b) / 3;
       bool isNight;
       bool IsAshlandsOn = EnvMan.instance.GetBiome() == Heightmap.Biome.AshLands && IsAshlandsAlwaysOn.Value;
+      bool IsDNAlwaysOn = EnvMan.instance.GetBiome() == Heightmap.Biome.DeepNorth && IsDeepNorthAlwaysOn.Value;
 
       if (IsCustomTimer.Value)
       {
@@ -54,7 +55,8 @@ namespace ICanSeeClearlyNow
                || (timeofday <= icd && IsCustomTimer.Value)
                || EnvMan.instance.GetCurrentEnvironment().m_alwaysDark
                || EnvMan.IsNight()
-               || IsAshlandsOn;
+               || IsAshlandsOn
+               || IsDNAlwaysOn;
 
         if (isNight)
         {
@@ -64,7 +66,7 @@ namespace ICanSeeClearlyNow
 
       if (!IsCustomTimer.Value)
       {
-        if (EnvMan.IsNight() || EnvMan.instance.GetCurrentEnvironment().m_alwaysDark || IsAshlandsOn)
+        if (EnvMan.IsNight() || EnvMan.instance.GetCurrentEnvironment().m_alwaysDark || IsAshlandsOn || IsDNAlwaysOn)
         {
           sourceColor *= GammaValue.Value / avgColor;
         }

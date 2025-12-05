@@ -1,5 +1,16 @@
 ## Changelog
 
+### 1.1.6
+  * `IsDeepNorthAlwaysOn` option is now really added.  For real this time.  Sorry about that.
+
+### 1.1.5
+  * `IsDeepNorthAlwaysOn` option is now really added.  Sorry about that.
+
+### 1.1.4
+  * Recompiled for Valheim Version 0.221.4
+  * Added `IsDeepNorthAlwaysOn` Config option to always enable gamma settings in the Deep North.
+  * Bumped up <LangVersion> to C# 12
+
 ### 1.1.3
   * Recompiled for Valheim version 0.219.16
   * Correctd mis-matched version numbers for the mod

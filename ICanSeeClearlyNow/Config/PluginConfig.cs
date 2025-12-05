@@ -6,6 +6,7 @@ namespace ICanSeeClearlyNow {
     public static ConfigEntry<bool> IsModEnabled { get; private set; }
     public static ConfigEntry<float> GammaValue { get; private set; }
     public static ConfigEntry<bool> IsAshlandsAlwaysOn {  get; private set; }
+    public static ConfigEntry<bool> IsDeepNorthAlwaysOn { get; private set; }
     public static ConfigEntry<bool> IsCustomTimer { get; private set; }
     public static ConfigEntry<float> IsCustomNight {  get; private set; }
     public static ConfigEntry<float> IsCustomDay { get; private set; }
@@ -16,7 +17,9 @@ namespace ICanSeeClearlyNow {
       GammaValue = Config.BindInOrder("Gamma Setting", "GammaValue", defaultValue: 0.6f, "Set your Gamma Value between 0.3 and 1.299",
           new AcceptableValueRange<float>(0.3f, 1.299f));
 
-      IsAshlandsAlwaysOn = Config.BindInOrder<bool>("Always On Options", "IsAshlandsAlwaysOn", false, "Always have Gamma Adjustment in the Ashlands");
+      IsAshlandsAlwaysOn = Config.BindInOrder<bool>("Always On Options", "IsAshlandsAlwaysOn", false, "Always have Gamma Adjustment in the Ashlands.");
+
+      IsDeepNorthAlwaysOn = Config.BindInOrder<bool>("Always On Options", "IsDeepNorthAlwaysOn", false, "Always have Gamma Adjustment in the Deep North.");
 
       IsCustomTimer = Config.BindInOrder<bool>("Custom Time", "IsCustomTimer", false, "Enable or Disable custom Night/Day Values");
 
