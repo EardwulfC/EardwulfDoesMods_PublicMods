@@ -115,6 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\PluginConfig.cs" />
+    <Compile Include="Core\Core.cs" />
     <Compile Include="Wardrobe.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,7 +1,13 @@
 ## Changelog
 
+### 1.4.1
+  * Recompiled for 0.221.4
+  * Added the Crafter Name to the logging statements when items are sent to, and picked up from, the ArmorStand
+  * Updated the BepInEx Dependancy to `denikson-BepInExPack_Valheim-5.4.2333`
+  * Moved the bulk of the mod code into Core.cs as step 1 of refactoring this mod
+
 ### 1.4.0
-  * Made swapping your cloak/cape optiona with a new Config Entry SwapCloakItem, defaults to true
+  * Made swapping your cloak/cape option a with a new Config Entry SwapCloakItem, defaults to true
 
 ### 1.3.0
   * Bumped up <LangVersion> to C# 12

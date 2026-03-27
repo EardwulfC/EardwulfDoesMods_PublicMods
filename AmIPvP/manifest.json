@@ -3,6 +3,6 @@
   "version_number": "1.0.0",
   "author": "EardwulfC",
   "description": "Adds a Status Effect to your character showing if your PvP is toggled on or off.",
-  "website_url": "Mod website.",
+  "website_url": "https://github.com/EardwulfC/EardwulfDoesMods_PublicMods/tree/master/AmIPvP",
   "dependencies": [ "denikson-BepInExPack_Valheim-5.4.2333" ]
 }
