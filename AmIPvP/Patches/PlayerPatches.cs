@@ -8,16 +8,17 @@ internal class PlayerPatches
   static class PlayerPatch
   {
     [HarmonyPostfix]
-    [HarmonyPatch(nameof(Player.IsPVPEnabled))]
-    static void IsPvPEnabledChecker(Player __instance, bool __result)
+    [HarmonyPatch(nameof(Player.SetPVP))]
+    static void IsPvPEnabledChecker(Player __instance, bool enabled)
     {
-      if (__instance != Player.m_localPlayer ||
-          AmIPvP.IsMyPvPEnabled == __result)
+      if (__instance != Player.m_localPlayer) {
+        return;
+      }
+      if(AmIPvP.IsMyPvPEnabled == enabled)
       {
         return;
       }
-
-      AmIPvP.IsMyPvPEnabled = __result;
+      AmIPvP.IsMyPvPEnabled = enabled;
     }
   }
 
