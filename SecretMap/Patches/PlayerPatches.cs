@@ -18,7 +18,7 @@ internal class PlayerPatches
     {
       if (IsModEnabled.Value)
       {
-        Transform sharedPanelTransform = Minimap.m_instance.m_largeRoot.transform.Find("SharedPanel");
+        Transform sharedPanelTransform = Minimap.instance.m_largeRoot.transform.Find("SharedPanel");
 
         if (sharedPanelTransform == null)
         {

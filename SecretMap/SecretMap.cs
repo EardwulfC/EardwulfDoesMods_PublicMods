@@ -13,7 +13,7 @@ public sealed class SecretMap : BaseUnityPlugin
 {
   public const string PluginGuid = "EardwulfC.valheim.secretmap";
   public const string PluginName = "SecretMap";
-  public const string PluginVersion = "1.0.0";
+  public const string PluginVersion = "1.1.0";
 
   internal static BepInEx.Logging.ManualLogSource _logger;
 
