@@ -14,7 +14,7 @@ public class Wardrobe : BaseUnityPlugin
 {
   public const string PluginGuid = "EardwulfDoesMods.valheim.Wardrobe";
   public const string PluginName = "Wardrobe";
-  public const string PluginVersion = "1.4.1";
+  public const string PluginVersion = "1.5.0";
 
   void Awake()
   {

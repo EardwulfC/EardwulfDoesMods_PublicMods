@@ -59,7 +59,7 @@ static class ArmorStandSwapPatch
       {
         string itemstring = stand.m_nview.GetZDO().GetString(i.ToString() + "_item");
         ItemDrop itemDrop = ObjectDB.instance.GetItemPrefab(itemstring).GetComponent<ItemDrop>();
-        ItemDrop.LoadFromZDO(i, itemDrop.m_itemData, stand.m_nview.GetZDO());
+        ItemDrop.LoadFromZDO(itemDrop.m_itemData, stand.m_nview.GetZDO(), i);
         itemlist.Add(itemDrop);
         ZLog.Log($"Wardrobe says I removed item {itemDrop.name} From the ArmorStand. Level: {itemDrop.m_itemData.m_quality} " +
           $"Crafted By: {itemDrop.m_itemData.m_crafterName}");

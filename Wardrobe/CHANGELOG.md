@@ -1,5 +1,9 @@
 ## Changelog
 
+### 1.5.0
+  * Corrected a bug introduced in the Deep North Release version 10.0.7
+  * Recompiled for 10.0.12
+
 ### 1.4.1
   * Recompiled for 0.221.4
   * Added the Crafter Name to the logging statements when items are sent to, and picked up from, the ArmorStand
