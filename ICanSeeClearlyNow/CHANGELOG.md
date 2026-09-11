@@ -1,5 +1,8 @@
 ## Changelog
 
+### 1.2.0
+  * Updated for Deep North Release version 1.0.12
+
 ### 1.1.6
   * `IsDeepNorthAlwaysOn` option is now really added.  For real this time.  Sorry about that.
 

@@ -1,5 +1,10 @@
 ## Changelog
 
+### 1.6.0
+
+* Fixed a bug introduced by Deep North 1.0.7 caused by a change to the SetCreator() Function
+* Recompiled against Steam Version 10.0.12
+
 ### 1.5.4
 
 * Fixed a NRE that was fixed in 1.5.2 that was reintroduced in 1.5.3

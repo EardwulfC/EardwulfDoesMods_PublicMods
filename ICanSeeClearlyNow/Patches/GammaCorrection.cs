@@ -42,8 +42,8 @@ namespace ICanSeeClearlyNow
     {
       float avgColor = (sourceColor.r + sourceColor.g + sourceColor.b) / 3;
       bool isNight;
-      bool IsAshlandsOn = EnvMan.instance.GetBiome() == Heightmap.Biome.AshLands && IsAshlandsAlwaysOn.Value;
-      bool IsDNAlwaysOn = EnvMan.instance.GetBiome() == Heightmap.Biome.DeepNorth && IsDeepNorthAlwaysOn.Value;
+      bool IsAshlandsOn = EnvMan.instance.GetBiome().Biome == Heightmap.Biome.AshLands && IsAshlandsAlwaysOn.Value;
+      bool IsDNAlwaysOn = EnvMan.instance.GetBiome().Biome == Heightmap.Biome.DeepNorth && IsDeepNorthAlwaysOn.Value;
 
       if (IsCustomTimer.Value)
       {

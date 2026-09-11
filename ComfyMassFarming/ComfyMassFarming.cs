@@ -1,17 +1,14 @@
 ﻿namespace MassFarming;
 
 using BepInEx;
-
 using HarmonyLib;
-
+using Splatform;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System;
 using System.Reflection;
-
 using UnityEngine;
 using UnityEngine.Rendering;
-
 using static PluginConfig;
 
 [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
@@ -19,7 +16,7 @@ public class MassFarming : BaseUnityPlugin
 {
   public const string PluginGuid = "EardwulfDoesMods.Comfy.MassFarming";
   public const string PluginName = "Comfy.MassFarming";
-  public const string PluginVersion = "1.5.4";
+  public const string PluginVersion = "1.6.0";
 
   Harmony _harmony;
 
@@ -132,7 +129,7 @@ public class MassFarming : BaseUnityPlugin
         Piece component = newPlaceObj.GetComponent<Piece>();
         if (component)
         {
-          component.SetCreator(__instance.GetPlayerID());
+          component.SetCreator(__instance.GetPlayerID(), PlatformManager.DistributionPlatform.LocalUser.PlatformUserID);
         }
         placedPiece.m_placeEffect.Create(newPos, placedRotation, newPlaceObj.transform);
         Game.instance.IncrementPlayerStat(PlayerStatType.Builds);
