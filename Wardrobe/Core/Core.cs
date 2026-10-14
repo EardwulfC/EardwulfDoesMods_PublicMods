@@ -35,7 +35,7 @@ static class ArmorStandSwapPatch
     if (__instance.m_nview && __instance.m_nview.m_zdo.m_prefab == ArmorStandHashCode)
     {
 
-      List<ItemDrop> itemList = ArmorStandEquip(__instance);
+      List<ItemDrop.ItemData> itemList = ArmorStandEquip(__instance);
       PlayerEquipmentToArmorStand(__instance, user);
       ArmorStandEquipmentToPlayer(itemList, user);
       ZLog.Log($"Swapping Gear with Armor Stand!");
@@ -50,27 +50,29 @@ static class ArmorStandSwapPatch
     }
   }
 
-  public static List<ItemDrop> ArmorStandEquip(ArmorStand stand)
+  public static List<ItemDrop.ItemData> ArmorStandEquip(ArmorStand stand)
   {
-    List<ItemDrop> itemlist = new List<ItemDrop>();
+    List<ItemDrop.ItemData> itemlist = new List<ItemDrop.ItemData>();
     for (int i = 0; i < stand.m_slots.Count; i++)
     {
       if (stand.HaveAttachment(i))
       {
-        string itemstring = stand.m_nview.GetZDO().GetString(i.ToString() + "_item");
-        ItemDrop itemDrop = ObjectDB.instance.GetItemPrefab(itemstring).GetComponent<ItemDrop>();
-        ItemDrop.LoadFromZDO(itemDrop.m_itemData, stand.m_nview.GetZDO(), i);
-        itemlist.Add(itemDrop);
-        ZLog.Log($"Wardrobe says I removed item {itemDrop.name} From the ArmorStand. Level: {itemDrop.m_itemData.m_quality} " +
-          $"Crafted By: {itemDrop.m_itemData.m_crafterName}");
-        stand.DestroyAttachment(i);
-        stand.m_nview.GetZDO().Set(i.ToString() + "_item", "");
-        stand.m_nview.InvokeRPC(ZNetView.Everybody, "RPC_SetVisualItem", new object[]
+        // The ArmorStand stores each slot as the stable hash of the item's prefab name.
+        GameObject itemPrefab = ObjectDB.instance.GetItemPrefab(stand.GetAttachedItem(i));
+        if (!itemPrefab)
         {
-          i,
-          "",
-          0
-        });
+          ZLog.LogWarning($"Wardrobe could not find the item prefab in ArmorStand slot {i}, leaving it on the stand.");
+          continue;
+        }
+        // Load into a copy, so the stand's quality and crafter don't overwrite the shared prefab data.
+        ItemDrop.ItemData itemData = itemPrefab.GetComponent<ItemDrop>().m_itemData.Clone();
+        itemData.m_dropPrefab = itemPrefab;
+        ItemDrop.LoadFromZDO(itemData, stand.m_nview.GetZDO(), i);
+        itemData.m_equipped = false;
+        itemlist.Add(itemData);
+        ZLog.Log($"Wardrobe says I removed item {itemPrefab.name} From the ArmorStand. Level: {itemData.m_quality} " +
+          $"Crafted By: {itemData.m_crafterName}");
+        stand.DestroyAttachment(i);
         stand.UpdateSupports();
         stand.m_cloths = stand.GetComponentsInChildren<Cloth>();
       }
@@ -113,23 +115,23 @@ static class ArmorStandSwapPatch
     stand.InvokeRepeating("UpdateAttach", 0f, 0.1f);
   }
 
-  public static void ArmorStandEquipmentToPlayer(List<ItemDrop> itemlist, Humanoid human)
+  public static void ArmorStandEquipmentToPlayer(List<ItemDrop.ItemData> itemlist, Humanoid human)
   {
     Player player = Player.m_localPlayer;
 
     if (human == player)
     {
 
-      foreach (ItemDrop itemdrop in itemlist)
+      foreach (ItemDrop.ItemData item in itemlist)
       {
-        bool flag = player.m_inventory.AddItem(itemdrop.m_itemData);
+        bool flag = player.m_inventory.AddItem(item);
         if (!flag)
         {
-          GameObject.Instantiate(itemdrop.m_itemData.m_dropPrefab, player.transform.position, player.transform.rotation);
+          ItemDrop.DropItem(item, 1, player.transform.position, player.transform.rotation);
         }
         else
         {
-          player.QueueEquipAction(itemdrop.m_itemData);
+          player.QueueEquipAction(item);
         }
       }
     }
