@@ -1,0 +1,8 @@
+{
+  "name": "AAV_Reborn",
+  "version_number": "1.0.0",
+  "author": "Eardwulf",
+  "description": "A successor mod for Mayo's AAV",
+  "website_url": "Mod website.",
+  "dependencies": [ "denikson-BepInExPack_Valheim-5.4.2351" ]
+}
