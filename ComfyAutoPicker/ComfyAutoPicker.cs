@@ -33,7 +33,11 @@ public class Mod : BaseUnityPlugin
             "VineAsh".GetHashCode(),
             "Pickable_Thistle".GetStableHashCode(),
             "LuredWisp".GetStableHashCode(),
-            "Pickable_Fiddlehead".GetStableHashCode()
+            "Pickable_Fiddlehead".GetStableHashCode(),
+            "Pickable_Oat".GetStableHashCode(),
+            "Pickable_Poteitr".GetStableHashCode(),
+            "Pickable_SeedKale".GetStableHashCode(),
+            "Pickable_Kale".GetStableHashCode()
         };
 
   void Awake()

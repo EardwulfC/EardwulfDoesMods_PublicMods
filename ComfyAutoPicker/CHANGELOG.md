@@ -1,5 +1,12 @@
 # Changelog
 
+### 1.6.1
+
+  * Recompiled for Deep North `1.0.20`
+  * Added additional items to the Auto Picker List
+    * `Pickable_Kale`, `Pickable_SeedKale`, `Pickable_Poteitr`, `Pickable_Oat`
+  * Updated The BepInEx Dependency to version `denikson-BepInExPack_Valheim-5.4.2351`
+
 ### 1.6.0
   * Recompiled for Call To Arms `v0.221.4`
   * Balancing Change - Added Durability usage to the Scythe, calculated on a per plant basis
