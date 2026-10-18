@@ -10,7 +10,7 @@ public sealed class AmIPvP : BaseUnityPlugin
 {
   public const string PluginGuid = "EardwulfC.valheim.AmIPvP";
   public const string PluginName = "AmIPvP";
-  public const string PluginVersion = "1.0.0";
+  public const string PluginVersion = "1.0.1";
 
   public static bool IsMyPvPEnabled = false;
   public static int hashPvPOff;
