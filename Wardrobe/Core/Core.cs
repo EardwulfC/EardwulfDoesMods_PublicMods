@@ -1,12 +1,12 @@
 ﻿namespace Wardrobe;
 
-using BepInEx;
 using HarmonyLib;
+
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Reflection;
+
 using UnityEngine;
+
 using static PluginConfig;
 
 
@@ -35,7 +35,7 @@ static class ArmorStandSwapPatch
     if (__instance.m_nview && __instance.m_nview.m_zdo.m_prefab == ArmorStandHashCode)
     {
 
-      List<ItemDrop> itemList = ArmorStandEquip(__instance);
+      List<ItemDrop.ItemData> itemList = ArmorStandEquip(__instance);
       PlayerEquipmentToArmorStand(__instance, user);
       ArmorStandEquipmentToPlayer(itemList, user);
       ZLog.Log($"Swapping Gear with Armor Stand!");
@@ -50,32 +50,37 @@ static class ArmorStandSwapPatch
     }
   }
 
-  public static List<ItemDrop> ArmorStandEquip(ArmorStand stand)
+  public static List<ItemDrop.ItemData> ArmorStandEquip(ArmorStand stand)
   {
-    List<ItemDrop> itemlist = new List<ItemDrop>();
+    List<ItemDrop.ItemData> itemList = new List<ItemDrop.ItemData>();
+    ZDO zdo = stand.m_nview.GetZDO();
+
     for (int i = 0; i < stand.m_slots.Count; i++)
     {
       if (stand.HaveAttachment(i))
       {
-        string itemstring = stand.m_nview.GetZDO().GetString(i.ToString() + "_item");
-        ItemDrop itemDrop = ObjectDB.instance.GetItemPrefab(itemstring).GetComponent<ItemDrop>();
-        ItemDrop.LoadFromZDO(itemDrop.m_itemData, stand.m_nview.GetZDO(), i);
-        itemlist.Add(itemDrop);
-        ZLog.Log($"Wardrobe says I removed item {itemDrop.name} From the ArmorStand. Level: {itemDrop.m_itemData.m_quality} " +
-          $"Crafted By: {itemDrop.m_itemData.m_crafterName}");
-        stand.DestroyAttachment(i);
-        stand.m_nview.GetZDO().Set(i.ToString() + "_item", "");
-        stand.m_nview.InvokeRPC(ZNetView.Everybody, "RPC_SetVisualItem", new object[]
+        int itemHash = stand.GetAttachedItem(i);
+        GameObject go = ObjectDB.instance.GetItemPrefab(itemHash);
+        ItemDrop itemDrop = go.GetComponent<ItemDrop>();
+        ItemDrop.ItemData itemData = itemDrop.m_itemData.Clone();
+        itemData.m_dropPrefab = go;
+        ItemDrop.LoadFromZDO(itemData, zdo, i);
+        itemList.Add(itemData);
+        itemData.m_equipped = false;
+
+        if (itemData.m_cheated)
         {
-          i,
-          "",
-          0
-        });
+          Wardrobe.LogError($"{go.name} is cheated!");
+        }
+
+        stand.DestroyAttachment(i);
+        zdo.Set(i.ToString() + "_item", 0);
+        stand.m_nview.InvokeRPC(ZNetView.Everybody, "RPC_DestroyAttachment", new object[] {i});
         stand.UpdateSupports();
         stand.m_cloths = stand.GetComponentsInChildren<Cloth>();
       }
     }
-    return itemlist;
+    return itemList;
   }
 
   public static void PlayerEquipmentToArmorStand(ArmorStand stand, Humanoid player)
@@ -99,13 +104,19 @@ static class ArmorStandSwapPatch
     {
       if (equip != null)
       {
+
+        if (equip.m_cheated)
+        {
+          Wardrobe.LogError($"{equip.m_shared.m_name} is cheated!");
+        }
+
         int slot = FindFreeSlot(stand, equip);
         if (slot < 0)
         {
           throw new IndexOutOfRangeException("Error!");
         }
         stand.m_queuedItem = equip;
-        ZLog.Log($"Sending {equip.m_shared.m_name} to the Armor Stand.  Level: {equip.m_quality} Crafted By: {equip.m_crafterName}");
+        Wardrobe.LogInfo($"Sending {equip.m_shared.m_name} to the Armor Stand.  Level: {equip.m_quality} Crafted By: {equip.m_crafterName}");
         stand.m_queuedSlot = slot;
         stand.UpdateAttach();
       }
@@ -113,23 +124,22 @@ static class ArmorStandSwapPatch
     stand.InvokeRepeating("UpdateAttach", 0f, 0.1f);
   }
 
-  public static void ArmorStandEquipmentToPlayer(List<ItemDrop> itemlist, Humanoid human)
+  public static void ArmorStandEquipmentToPlayer(List<ItemDrop.ItemData> itemList, Humanoid human)
   {
     Player player = Player.m_localPlayer;
 
     if (human == player)
     {
-
-      foreach (ItemDrop itemdrop in itemlist)
+      foreach (ItemDrop.ItemData itemData in itemList)
       {
-        bool flag = player.m_inventory.AddItem(itemdrop.m_itemData);
+        bool flag = player.m_inventory.AddItem(itemData);
         if (!flag)
         {
-          GameObject.Instantiate(itemdrop.m_itemData.m_dropPrefab, player.transform.position, player.transform.rotation);
+          ItemDrop.DropItem(itemData, 1, player.transform.position, player.transform.rotation);
         }
         else
         {
-          player.QueueEquipAction(itemdrop.m_itemData);
+          player.QueueEquipAction(itemData);
         }
       }
     }

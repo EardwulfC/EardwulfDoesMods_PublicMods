@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecretMap", "SecretMap\Secr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmIPvP", "AmIPvP\AmIPvP.csproj", "{71A6DCB2-978C-469F-9FBD-C5A399DD913C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AAV Reborn", "AAV Reborn\AAV Reborn.csproj", "{545AC578-335D-DAC3-5ED5-49B614D6067C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +76,10 @@ Global
 		{71A6DCB2-978C-469F-9FBD-C5A399DD913C}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{71A6DCB2-978C-469F-9FBD-C5A399DD913C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71A6DCB2-978C-469F-9FBD-C5A399DD913C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{545AC578-335D-DAC3-5ED5-49B614D6067C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{545AC578-335D-DAC3-5ED5-49B614D6067C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{545AC578-335D-DAC3-5ED5-49B614D6067C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{545AC578-335D-DAC3-5ED5-49B614D6067C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

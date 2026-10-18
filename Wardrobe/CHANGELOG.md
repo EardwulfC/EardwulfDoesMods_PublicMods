@@ -1,5 +1,12 @@
 ## Changelog
 
+
+### 1.5.1
+
+  * Recompiled for version 1.0.20
+  * Corrected an NRE caused by IronGate changing how `ArmorStand` stores Item Data
+  * Updated the BepInEx Dependancy to `denikson-BepInExPack_Valheim-5.4.2351`
+
 ### 1.5.0
   * Corrected a bug introduced in the Deep North Release version 10.0.7
   * Recompiled for 10.0.12
