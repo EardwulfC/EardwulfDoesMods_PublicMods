@@ -1,5 +1,14 @@
 ## Changelog
 
+### 1.1.2
+
+  * Recompiled for version 1.0.20
+
+
+### 1.1.1
+
+  * Uppdated to `README` to no longer give manual installation instructions
+
 ### 1.1.0
 
   * Updated for Deep North Release version 1.0.7

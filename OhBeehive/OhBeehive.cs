@@ -16,7 +16,7 @@ public class OhBeehive : BaseUnityPlugin
 {
   public const string PluginGuid = "EardwulfDoesMods.valheim.OhBeehive";
   public const string PluginName = "OhBeehive";
-  public const string PluginVersion = "1.0.1";
+  public const string PluginVersion = "1.1.0";
 
   public static ManualLogSource _logger;
 

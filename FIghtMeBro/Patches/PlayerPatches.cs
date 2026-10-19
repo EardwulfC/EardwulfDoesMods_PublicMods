@@ -20,8 +20,28 @@ internal class PlayerPatches
       {
         return;
       }
+
       __instance.SetPVP(true);
       Chat.m_instance.AddString("<color=red>You are now flagged for PVP!</color>");
+    }
+  }
+
+  static class OnSetLocalPlayerPatches
+  {
+    [HarmonyPostfix]
+    [HarmonyPatch(nameof(Player.SetLocalPlayer))]
+
+    static void LocalPlayerPvPOn(Player __instance)
+    {
+      if(!IsModEnabled.Value || !__instance || __instance != Player.m_localPlayer)
+      {
+        return;
+      }
+      if (__instance.m_pvp)
+      {
+        __instance.m_pvp = false;
+      }
+      __instance.SetPVP(true);
     }
   }
 }
