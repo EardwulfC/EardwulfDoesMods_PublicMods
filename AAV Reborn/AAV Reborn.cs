@@ -17,7 +17,7 @@ public sealed class AAV_Reborn : BaseUnityPlugin
 {
   public const string PluginGuid = "Eardwulf.valheim.aavreborn";
   public const string PluginName = "AAV_Reborn";
-  public const string PluginVersion = "1.0.0";
+  public const string PluginVersion = "1.0.1";
 
   static ManualLogSource _logger;
 
