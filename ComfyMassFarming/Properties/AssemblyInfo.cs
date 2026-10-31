@@ -15,5 +15,5 @@ using System.Runtime.InteropServices;
 [assembly: Guid("e1da477d-c14c-4355-be8f-c043e789791a")]
 
 
-[assembly: AssemblyVersion(MassFarming.MassFarming.PluginVersion)]
-[assembly: AssemblyFileVersion(MassFarming.MassFarming.PluginVersion)]
+[assembly: AssemblyVersion(ComfyMassFarming.MassFarming.PluginVersion)]
+[assembly: AssemblyFileVersion(ComfyMassFarming.MassFarming.PluginVersion)]

@@ -1,22 +1,10 @@
 # ComfyMassFarming
 
   * A fork of Xeio's Mass Farming Mod for use on Comfy Valheim.
-  * Grid size is locked to a maximum of 3x3, you may select any combination between 1x1 through 3x3.
+  * Grid size is locked to a maximum of 9 crops at one time; you may select any combination from 1x1 to maximum sizes of 1x9, 2x4, or 3x3.
   * Stamina usage has been increased by 76.95% when mass planting to help reduce the advantage over Vanilla players
   * Mass Picking feature has been removed
   * Mod Name has been updated to differentiate it from the Mass Farming Mod
-  * Logging messages added to display stamina usage v. normal stamina usage.
-
-## Installation
-
-### Manual
-
-  * Un-zip `ComfyMassFarming.dll` to your `/Valheim/BepInEx/plugins/` folder.
-
-### Thunderstore (manual)
-
-  2. Go to Settings > Import local mod > Select `ComfyMassFarming_v1.5.4.zip`.
-  3. Click "OK/Import local mod" on the pop-up for information.
 
 ## Instructions
 

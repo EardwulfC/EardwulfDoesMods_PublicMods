@@ -112,6 +112,9 @@
   <ItemGroup>
     <Compile Include="ComfyMassFarming.cs" />
     <Compile Include="Config\PluginConfig.cs" />
+    <Compile Include="Core\Core.cs" />
+    <Compile Include="Patches\PlayerPatches.cs" />
+    <Compile Include="Patches\Helpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

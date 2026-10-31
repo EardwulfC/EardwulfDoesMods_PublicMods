@@ -1,9 +1,19 @@
 ## Changelog
 
+### 1.6.1
+
+* Code clean up and refactoring
+* Removed all implicit `var` declarations and replaced them with explicit declarations
+* Recompiled against Valheim `1.0.21`
+* Bumped the BepInEx Dependency to version `denikson-BepInExPack_Valheim-5.4.2351`
+* Updated `README.md`
+  * Clarified grid planting options (Thank you to Kluh'taq)
+  * Removed manual installation instructions
+
 ### 1.6.0
 
-* Fixed a bug introduced by Deep North 1.0.7 caused by a change to the SetCreator() Function
-* Recompiled against Steam Version 10.0.12
+* Fixed a bug introduced by Deep North `1.0.7` caused by a change to the SetCreator() Function
+* Recompiled against Valheim `10.0.12`
 
 ### 1.5.4
 
@@ -15,7 +25,7 @@
 
 ### 1.5.2
 
-* Recompiled for 0.219.16
+* Recompiled for `0.219.16`
 
 ### 1.5.1
 
@@ -23,7 +33,7 @@
 
 ### 1.5.0
 
-* Updated For Valheim version 0.219.14 (BogWitch)
+* Updated For Valheim version `0.219.14` (BogWitch)
 
 ### 1.4.2
 
@@ -31,7 +41,7 @@
 
 ### 1.4.1
 
-* Moved the Changelog into CHANGELOG.md
+* Moved the Changelog into `CHANGELOG.md`
 
 ### 1.4.0
 
@@ -43,7 +53,7 @@
 
 ### 1.3.0
 
-* Moved code around and created PluginCongfig.cs file to match standard practices on Comfy.
+* Moved code around and created `PluginCongfig.cs` file to match standard practices on Comfy.
 
 ### 1.2.3
 
@@ -51,18 +61,18 @@
 
 ### 1.2.2
 
-* Updated for compatibility with patch 0.217.24
+* Updated for compatibility with patch `0.217.24`
 
 ### 1.2.1
 
 * Updated build count increment function for new IncrementPlayerstats
-* Recompiled against dlls for version 0.217.14
+* Recompiled against dlls for version `0.217.14`
 
 ### 1.2.0
 
-* Bumped BepInEx dependancy to version 5.4.2105
+* Bumped BepInEx dependancy to version `5.4.2105`
 * Include correction to GetRightItem missing from Xeio's main version of Mass Farming.
-* Full compatibility with Valheim v0.216.9
+* Full compatibility with Valheim v`0.216.9`
 
 ### 1.1.0
 
